@@ -1,0 +1,254 @@
+﻿
+@{
+    ViewBag.Title = "AgentTargetReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="https://code.highcharts.com/highcharts.js"></script> 
+<link href="~/css/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/css/ui.jqgrid.min.css" rel="stylesheet" />
+<script src="~/js/jquery.jqgrid.min.js"></script>
+<div class="modal-header">
+    <div class="col-md-2">
+        <label for="">Month</label>
+        <select name="ddlMonth" id="ddlMonth" tabindex="1" class="form-control stateSelect e-policy-marginbottom-inputs">
+            <option selected="selected" value="0">All</option>
+            <option value="1">JAN</option>
+            <option value="2">FEB</option>
+            <option value="3">MAR</option>
+            <option value="4">APR</option>
+            <option value="5">MAY</option>
+            <option value="6">JUN</option>
+            <option value="7">JUL</option>
+            <option value="8">AUG</option>
+            <option value="9">SEP</option>
+            <option value="10">OCT</option>
+            <option value="11">NOV</option>
+            <option value="12">DEc</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label for="">Year</label>
+        <select name="ddlYear" id="ddlYear" tabindex="2" class="form-control stateSelect e-policy-marginbottom-inputs">
+            <option selected="selected" value="0">All</option>
+            <option value="2017">2017</option>
+            <option value="2018">2018</option>            
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label for="">Policy Type</label>
+        <select name="ddlPolicyTypeId" id="ddlPolicyTypeId" tabindex="3" class="form-control stateSelect e-policy-marginbottom-inputs">
+            <option selected="selected" value="0">All</option>
+            <option value="1">Term Life Insurance</option>
+            <option value="2">Whole Life Policy</option>
+            <option value="3">Endowment Plans</option>
+            <option value="4">Unit Linked Insurance Plans</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label for="">Agent Name</label>
+        <select name="ddlAgentName" id="ddlAgentName" tabindex="4" class="form-control stateSelect e-policy-marginbottom-inputs">
+        </select>
+    </div>
+    <div class="col-md-2">           
+        <input type="radio" id="rdGraph" name="reporttype" value="1" /><label for="">Graphical View</label>
+        
+        <input type="radio" id="rdGrid" name="reporttype" value="2" /><label for="">Grid View</label>
+        
+    </div>
+    <div class="col-md-1">
+        <button type="button" id="btnSearch" tabindex="5" class="btn btn-primary" onclick="GenerateTargetRpt();" style="margin-top:30px;">Search</button>
+    </div>
+    
+</div>
+<div id="alert" class="alert alert-warning alert-dismissible fade show" style="display:none" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    
+</div>
+<div id="divContainerChart"></div>
+<div>
+    <table id="jqGrid"></table>
+    <div id="jqControls"></div>
+</div> 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#lblPageName").text("Agent Target Analysis Report");
+        $("#divDashboardHeader,#divDashboard").hide();
+        $('.date').datepicker({
+            dateFormat: 'dd/mm/yy',
+            changeYear: true,
+            maxDate: '0'
+
+        });
+       
+        $("#rdGraph").attr('checked', true);
+        LoadAgentList();
+        $("#divContainerChart").show();
+        $("#jqGrid").hide();
+        $("#jqControls").hide();
+    });
+    function GenerateTargetRpt()
+    {
+        if ($('input[name=reporttype]:checked').val() == "1")
+            TargetAnalysisChart();
+        else
+            TargetAnalysisGridView();
+    }
+    function TargetAnalysisGridView()
+    {
+        $("#wait").css("display", "block");
+        $("#divContainerChart").hide();
+        $("#jqGrid").show();
+        $("#jqControls").show();
+
+        var url = '/InsuranceIssueApp.Web/Report/RepAgentTargetResult?month=' + $("#ddlMonth option:selected").val() + '&year=' + $("#ddlYear option:selected").val() + '&agentid=' + $('#ddlAgentName option:selected').val() + '&typeid=' + $('#ddlPolicyTypeId option:selected').val();
+        //alert($('#ddlAgentName option:selected').val());
+        $("#jqGrid").jqGrid({
+            url: url,
+            datatype: 'json',
+            mtype: 'POST',
+            colNames: ['MonthName', 'Total SumAssured', 'Target Amount'],
+            colModel: [
+                { key: true, name: 'MonthName', index: 'MonthName', editable: true },
+                { key: false, name: 'TotalSumAssured', index: 'TotalSumAssured', editable: true },
+                { key: false, name: 'AgentTargetAmount', index: 'TargetAmount', editable: true }               
+            ],
+            pager: jQuery('#jqControls'),
+            //  rowNum: 10,
+            //  rowList: [10, 20, 30, 40, 50],
+            height: '100%',
+            viewrecords: true,
+            caption: 'Agent Target Analysis Records',
+            emptyrecords: 'No Agent Target Analysis Records are Available to Display',
+            jsonReader: {
+                root: "rows",
+                page: "page",
+                total: "total",
+                records: "records",
+                repeatitems: false,
+                Id: "0"
+            },
+            autowidth: true,
+            multiselect: false
+        });  
+
+        $("#wait").css("display", "none");
+    }
+    function TargetAnalysisChart() {
+        $("#wait").css("display", "block");
+        $("#divContainerChart").show();
+        $("#jqGrid").hide();
+        $("#jqControls").hide();
+        var url = '/InsuranceIssueApp.Web/Report/RepAgentTargetResult?month=' + $("#ddlMonth option:selected").val() + '&year=' + $("#ddlYear option:selected").val() + '&agentid=' + $('#ddlAgentName option:selected').val() + '&typeid=' + $('#ddlPolicyTypeId option:selected').val();
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'json',
+            success: function (jData) {
+                if (jData != null && jData.length > 0) {
+                    var categoryArray = [];
+                    var dataArray = [];
+                    var dataTargetArray = [];
+                    $.each(jData, function (i, d) {
+                        categoryArray.push(d.MonthName);
+                        dataArray.push(parseInt(d.TotalSumAssured));
+                        dataTargetArray.push(parseInt(d.AgentTargetAmount));
+                            
+                    });
+
+
+                    var title = {
+                        text: 'Monthwise Agent Target Analysis Report'
+                    };
+                    var subtitle = {
+                        text: ''
+                    };
+                    var xAxis = {
+                        categories: categoryArray
+                    };
+                    var yAxis = {
+                        title: {
+                            text: 'Amount(Rs.)'
+                        },
+                        plotLines: [{
+                            value: 0,
+                            width: 1,
+                            color: '#003399'
+                        }]
+                    };
+
+                    var tooltip = {
+                        valueSuffix: 'Amount'
+                    }
+                    var legend = {
+                        layout: 'vertical',
+                        align: 'right',
+                        verticalAlign: 'middle',
+                        borderWidth: 0
+                    };
+                    var series = [{
+                        name: 'SumAssured',
+                        data: dataArray,
+                        color: '#18B319'
+
+                    },
+                    {
+                        name: 'TargetAmount',
+                        data: dataTargetArray,
+                        color: '#FFC300'
+                    }
+                    ];
+
+
+                    var chart = {
+                        type: 'column'
+                    };
+
+
+                    var json = {};
+                    json.title = title;
+                    json.subtitle = subtitle;
+                    json.xAxis = xAxis;
+                    json.yAxis = yAxis;
+                    json.tooltip = tooltip;
+                    json.legend = legend;
+                    json.series = series;
+                    json.chart = chart;
+
+                    $('#divContainerChart').highcharts(json);
+                    $('.highcharts-credits').text('');
+                    // alert($('.highcharts-credits').text(''));
+                    $("#wait").css("display", "none");
+                }
+                else {
+                    $("#alert").show();
+                    $("#alert").html("No Records Found!");
+                    $("#wait").css("display", "none");
+                }
+
+            },
+            error: function (err) {
+                $("#wait").css("display", "none");
+            }
+        });
+    }
+
+    function getWebapiBaseUrl() {
+        var uri = 'http://localhost/InsuranceIssueApp.WebAPI/';
+        return uri;
+    }
+
+    function LoadAgentList() {
+        var baseapiurl = getWebapiBaseUrl() + 'api/InsuranceAPI/GetAgentList';
+        $.post(baseapiurl, function (jData) {
+            var strHtml = '<option value="0">All</option>';
+            if (jData && jData.length > 0) {
+                $.each(jData, function (key, item) {
+                    strHtml += '<option value="' + item.Value + '">' + item.Name + '</option>';
+                });
+                $('#ddlAgentName').html(strHtml);
+            }
+        });
+    }
+</script>

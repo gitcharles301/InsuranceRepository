@@ -1,0 +1,236 @@
+﻿
+@{
+    ViewBag.Title = "ViewEnquiry";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+<div class="modal-header">
+    <div class="col-md-5">
+        <label for="">From Date</label>
+        <input type="text"  class="form-control date" id="dtpStartDate" />
+    </div>
+    <div class="col-md-5">
+        <label for="">To Date</label>
+        <input type="text"  class="form-control date" id="dtpEndDate" />
+    </div>
+    <div class="col-md-1">
+        <button type="button" id="btnSearch" class="btn btn-primary" onclick="GetAllEnquiries();" style="margin-top:30px;">Search</button>
+    </div>   
+   
+</div>
+
+<div id="divError" class="alert alert-danger" style="display:none">
+</div>
+
+    <div class="table-responsive table-striped">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0"></table>
+    </div>
+
+<div id="divCallbackUpdate" class="modal fade"  tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Callback Detail</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success" id="divSuccess" style="display:none">
+                    <strong>Success!</strong> Indicates a successful or positive action.
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="epolicy-paddingBottom">
+                        <div class="row">
+                            <div class="col-md-3 col-xs-12">
+                                <label class="boldText" for="firstname">
+                                    Callback Date <span class="red">*</span>
+                                </label>
+                            </div>
+                            <div class="col-md-8 col-xs-12">
+                                <input name="txtCallbackDate" type="text"  id="txtCallbackDate" required tabindex="5" />&nbsp;&nbsp;
+                                <select name="ddlTime" id="ddlTime" tabindex="10" class="form-control stateSelect e-policy-marginbottom-inputs">
+                                    <option selected="selected" value="0">Select</option>
+                                    <option value="10:00">10:00AM</option>
+                                    <option value="10:30">10:30AM</option>
+                                    <option value="11:00">11:00AM</option>
+                                    <option value="11:30">11:30AM</option>
+                                    <option value="12:00">12:00PM</option>
+                                    <option value="12:30">12:30PM</option>
+                                    <option value="13:00">01:00PM</option>
+                                    <option value="13:30">01:30PM</option>
+                                    <option value="14:00">02:00PM</option>
+                                    <option value="14:30">02:30PM</option>
+                                    <option value="15:00">03:00PM</option>
+                                    <option value="15:30">03:30PM</option>
+                                    <option value="16:00">04:00PM</option>
+                                    <option value="16:30">04:30PM</option>
+                                    <option value="17:00">05:00PM</option>
+                                    <option value="17:30">05:30PM</option>
+                                    <option value="18:00">06:00PM</option>
+                                    <option value="18:30">06:30PM</option>
+                                </select>     
+                                <span id="revCallbackDate" style="color:Red;display:none;"></span>
+                                <input type="hidden" id="hdnEquiryID" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-xs-12">
+                    <div class="epolicy-paddingBottom">
+                        <div class="row">
+                            <div class="col-md-3 col-xs-12 text-left">
+                                <label class="boldText" for="txtCustomerFeedBack">
+                                    Customer FeedBack <span class="red">*</span>
+                                </label>
+                            </div>
+                            <div class="col-md-8 col-xs-12">
+                                <textarea name="txtCustomerFeedBack" type="text" maxlength="300" cols="8" rows="3" required id="txtCustomerFeedBack" tabindex="9" class="form-control fullwidth e-policy-marginbottom-inputs"></textarea>
+                                <span id="revCustomerFeedBack" style="display:inline-block;color:Red;width:30px;display:none;"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnUpdateCallback" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#lblPageName").text("My Queue - Enquiries");
+            $("#divDashboardHeader,#divDashboard").hide();
+            $('.date').datepicker({
+                dateFormat: 'dd/mm/yy',
+                changeYear: true,
+                maxDate: '0'
+            });
+
+            $('#txtCallbackDate').datepicker({
+                dateFormat: 'dd/mm/yy',
+                changeYear: true,
+                minDate: '0'
+            });
+
+            $('#txtCallbackTime').timepicker();
+           
+            $("#btnUpdateCallback").click(function () {
+                UpdateUWReview(4);
+            });
+        });
+        function GetAllEnquiries() {
+
+            if ($("#dtpStartDate").val() == "") {
+                $("#divError").show();
+                $("#divError").html("Please enter FromDate!");
+                return false;
+            }
+            else if ($("#dtpEndDate").val() == "") {
+                $("#divError").show();
+                $("#divError").html("Please enter ToDate!");
+                return false;
+            }
+            else {
+                
+                var ReportFilters = {
+                    FromDate: $("#dtpStartDate").val(),
+                    ToDate: $("#dtpEndDate").val()
+                };
+                $.ajax({
+                    url: '/InsuranceIssueApp.Web/Enquiry/GetAllEnquiries?fromdate=' + $("#dtpStartDate").val() + '&todate=' + $("#dtpEndDate").val(),
+                    type: "POST",
+                    data: ReportFilters,
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data != null && data.length > 0) {
+                            var table = $('#dataTable');
+                            table.html('');
+                            var tableMarkup = "<thead class='thead-light'><tr><td>ID</td><td>Customer Name</td><td>Date Of Birth</td><td>Phone No</td><td>Sum Assured</td><td>Policy Name</td><td>Policy Term</td><td>CallBack</td></tr></thread>";
+
+                            $.each(data, function () {
+                                tableMarkup = tableMarkup + "<tr><td>" + this.ID + "</td><td>" + this.CustomerName + "</td><td>" + this.DateOfBirth + "</td><td>" + this.PhoneNo + "</td><td>" + this.SumAssured + "</td><td>" + this.PolicyTypeName + "</td>";
+                                tableMarkup += "<td>" + this.PolicyTerm + "</td>"
+                                tableMarkup += '<td><button type="button" onclick="loadEnquiryCallback(' + this.ID + ')"  class="btn btn-danger">Update CallBack</button> </td></tr>';
+                            });
+
+                            table.append(tableMarkup);
+                            $("#divError").hide();
+                            
+                        }
+                        else {
+                            $("#divError").show();
+                            $("#divError").html("No Records Found!");
+                           
+                        }
+                        // table.append('</table>');
+                    },
+                    error: function (err) {
+                        $("#divError").show();
+                        $("#divError").html(err);
+                    }
+                });
+            }
+
+        }
+
+        function loadEnquiryCallback(ID)
+        {           
+            $('#divCallbackUpdate').modal('show')
+           /// $("#divCallbackUpdate").show();
+            $("#hdnEquiryID").val(ID);
+        }
+
+        function getWebapiBaseUrl() {
+            var uri = 'http://localhost/InsuranceIssueApp.WebAPI/';
+            return uri;
+        }
+
+        function UpdateUWReview(id) {
+            $("#divSuccess").hide();
+            if ($("#txtCallbackDate").val() == '') {
+                $("#divError").show();
+                $("#divError").html("Please select CallBackDate!");
+                return false;
+            }
+            else if ($("#ddlTime option:selected").text() == "Select") {
+                $("#divError").show();
+                $("#divError").html("Please select Time!");
+                return false;
+            }
+            else if ($("#txtCustomerFeedBack").val() == '') {
+                $("#revGender").show();
+                $("#revGender").html("Please enter Customer FeedBack!");
+                return false;
+            }
+            else {
+                var EnquiryCallbackDetail = {
+                    CustomerFeedback: $("#txtCustomerFeedBack").val(),
+                    CreatedBy: $("#hdnUserid").val(),
+                    CallBackDate: $("#txtCallbackDate").val() + " " + $("#ddlTime option:selected").val(),                    
+                    EnquiryId: $("#hdnEquiryID").val()
+                };
+                var baseapiurl = getWebapiBaseUrl() + 'api/InsuranceAPI/InsertCallbackDetail';
+                debugger;
+                $.ajax({
+                    url: baseapiurl,
+                    data: EnquiryCallbackDetail,
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (jData) {
+                        debugger;
+                        $("#divSuccess").show();
+                        $("#divSuccess").html("Customer Callback Detail updated successfully!");
+                    },
+                    error: function (err) {
+                        // alert(err);
+                    }
+                });
+            }
+        }
+    </script>

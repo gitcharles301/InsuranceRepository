@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="886e0e4db8384448afc7e80bbc5ff1bb" Name="Diagram1">
+        <EntityTypeShape EntityType="InsuranceDBModel.InsurerDetail" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="InsuranceDBModel.MedicalDetail" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="InsuranceDBModel.NomineeDetail" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="InsuranceDBModel.PersonalDetail" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InsuranceDBModel.PolicyDetail" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="InsuranceDBModel.PolicyNoGeneration" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="InsuranceDBModel.PolicyStatu" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InsuranceDBModel.Role" Width="1.5" PointX="5.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="InsuranceDBModel.State" Width="1.5" PointX="5.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InsuranceDBModel.User" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InsuranceDBModel.UserInRole" Width="1.5" PointX="8" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="InsuranceDBModel.FK_InsurerDetail_PolicyNoGeneration" ManuallyRouted="false" />
+        <AssociationConnector Association="InsuranceDBModel.FK_MedicalDetails_PolicyNoGeneration" ManuallyRouted="false" />
+        <AssociationConnector Association="InsuranceDBModel.FK_NomineeDetail_NomineeDetail" ManuallyRouted="false" />
+        <AssociationConnector Association="InsuranceDBModel.FK_PolicyDetail_PolicyNoGeneration" ManuallyRouted="false" />
+        <AssociationConnector Association="InsuranceDBModel.FK_UserInRole_Role" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

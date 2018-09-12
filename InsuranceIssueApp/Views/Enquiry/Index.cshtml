@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="alert alert-success" id="divError" style="display:none">
+   
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="input-group">
+            <a href="#"><input type="file" id="excelFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"></a>
+            <button class="btn btn-green" type="submit" onclick="PostExcel()" id="btnImport"><i class="glyphicon-fast-forward"></i>Import</button>
+            &nbsp;&nbsp; &nbsp;&nbsp;
+            @Html.ActionLink("EnquiryTemplate", "Download","Enquiry")
+
+        </div>
+        <br />
+        <br />
+    </div>
+    
+    <br />
+    <div id="divEnquiryError">
+        <table class="table table-bordered table-striped">
+            <thead  style="background-color:#7B7D7D; color:white">
+                <tr>
+                    <th>
+                        Row Number
+                    </th>
+                    <th>
+                        Error Level
+                    </th>
+                    <th>
+                        Column Name
+                    </th>
+                    <th>
+                        Error Message
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#lblPageName").text("Enquiry Data Upload");
+        $("#divDashboardHeader,#divDashboard").hide();
+        $('#divEnquiryError').hide();
+    });
+    function PostExcel() {
+        $("#divError").hide();
+      
+        var formData = new FormData();
+        var file = document.getElementById("excelFile").files[0];
+       
+        formData.append("FileUpload", file);
+        //formData.append("FileUpload1", $('#').files[0])
+        //formData.append("ID", id);
+       
+        if (file.type != null) {
+            $.ajax({
+                url: '/InsuranceIssueApp.Web/Enquiry/ImportExcel',
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: formData,
+                type: "POST",
+                success: function (jData) {
+                    if (jData != null && jData.length > 0) {
+                        $('#divEnquiryError').show();
+                        var strHtml = '';
+                        debugger;
+                        $.each(jData, function (key, item) {
+                            strHtml += '<tr>';
+                            strHtml += '<td>' + item.RowNumber + '</td>';
+                            strHtml += '<td>' + item.ErrorLevel + '</td>';
+                            strHtml += '<td>' + item.ColumnName + '</td>';
+                            strHtml += '<td>' + item.ErrorMessage + '</td>';
+                            strHtml += '</tr>';
+                        });
+
+                       // $('#divEnquiryError').toggle();
+                        $('#tbody').html(strHtml);
+                    }
+                    else
+                    {
+                        $("#divError").show();
+                        $("#divError").html('Enquiry uploaded successfully.');
+                    }
+                }
+            });
+        }
+    }
+</script>

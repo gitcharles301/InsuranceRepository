@@ -1,0 +1,636 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="InsuranceDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="InsurerDetail">
+          <Key>
+            <PropertyRef Name="InsurerId" />
+          </Key>
+          <Property Name="InsurerId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="EmailID" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="MobileNo" Type="int" Nullable="false" />
+          <Property Name="State" Type="int" Nullable="false" />
+          <Property Name="DateofBirth" Type="datetime" Nullable="false" />
+          <Property Name="Gender" Type="int" Nullable="false" />
+          <Property Name="AgentId" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifyDate" Type="datetime" Nullable="false" />
+          <Property Name="TempPolicyNo" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MedicalDetails">
+          <Key>
+            <PropertyRef Name="MedicalId" />
+          </Key>
+          <Property Name="MedicalId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TempPolicyNo" Type="bigint" />
+          <Property Name="MedicalCheckupDate" Type="datetime" />
+          <Property Name="HospitalName" Type="nvarchar" MaxLength="200" />
+          <Property Name="DoctorName" Type="nvarchar" MaxLength="200" />
+          <Property Name="MedicalReportComment" Type="nvarchar" MaxLength="200" />
+          <Property Name="MedicalCheckRequired" Type="bit" />
+        </EntityType>
+        <EntityType Name="NomineeDetail">
+          <Key>
+            <PropertyRef Name="NomineeId" />
+          </Key>
+          <Property Name="NomineeId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TempPolicyNo" Type="bigint" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateofBirth" Type="datetime" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" />
+          <Property Name="Pincode" Type="int" />
+        </EntityType>
+        <EntityType Name="PersonalDetail">
+          <Key>
+            <PropertyRef Name="InsurerPersonalId" />
+          </Key>
+          <Property Name="InsurerPersonalId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TempPolicyNo" Type="bigint" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" />
+          <Property Name="Pincode" Type="int" />
+          <Property Name="PersonalOccupation" Type="varchar" MaxLength="50" />
+          <Property Name="AadharNo" Type="bigint" />
+          <Property Name="PanNo" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PolicyDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TempPolicyNo" Type="bigint" Nullable="false" />
+          <Property Name="SumAssured" Type="bigint" Nullable="false" />
+          <Property Name="PolicyTerm" Type="int" />
+          <Property Name="SmokerStatus" Type="int" />
+          <Property Name="PolicyCreatedDate" Type="datetime" />
+          <Property Name="NextPremiumDueDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PolicyNoGeneration">
+          <Key>
+            <PropertyRef Name="TempPolicyNo" />
+          </Key>
+          <Property Name="TempPolicyNo" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PolicyNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="PolicyStatus" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PolicyStatus">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Orderby" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OrderBy" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="StateID" />
+          </Key>
+          <Property Name="StateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Orderby" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="EmailId" Type="nvarchar" MaxLength="200" />
+          <Property Name="LastLoginDate" Type="smalldatetime" />
+          <Property Name="LoginAttempt" Type="nchar" MaxLength="10" />
+          <Property Name="IsAccountLock" Type="bit" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserInRole">
+          <Key>
+            <PropertyRef Name="UserInRoleId" />
+          </Key>
+          <Property Name="UserInRoleId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_InsurerDetail_PolicyNoGeneration">
+          <End Role="PolicyNoGeneration" Type="Self.PolicyNoGeneration" Multiplicity="1" />
+          <End Role="InsurerDetail" Type="Self.InsurerDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PolicyNoGeneration">
+              <PropertyRef Name="TempPolicyNo" />
+            </Principal>
+            <Dependent Role="InsurerDetail">
+              <PropertyRef Name="TempPolicyNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MedicalDetails_PolicyNoGeneration">
+          <End Role="PolicyNoGeneration" Type="Self.PolicyNoGeneration" Multiplicity="0..1" />
+          <End Role="MedicalDetails" Type="Self.MedicalDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PolicyNoGeneration">
+              <PropertyRef Name="TempPolicyNo" />
+            </Principal>
+            <Dependent Role="MedicalDetails">
+              <PropertyRef Name="TempPolicyNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NomineeDetail_NomineeDetail">
+          <End Role="PolicyNoGeneration" Type="Self.PolicyNoGeneration" Multiplicity="1" />
+          <End Role="NomineeDetail" Type="Self.NomineeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PolicyNoGeneration">
+              <PropertyRef Name="TempPolicyNo" />
+            </Principal>
+            <Dependent Role="NomineeDetail">
+              <PropertyRef Name="TempPolicyNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PolicyDetail_PolicyNoGeneration">
+          <End Role="PolicyNoGeneration" Type="Self.PolicyNoGeneration" Multiplicity="1" />
+          <End Role="PolicyDetail" Type="Self.PolicyDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PolicyNoGeneration">
+              <PropertyRef Name="TempPolicyNo" />
+            </Principal>
+            <Dependent Role="PolicyDetail">
+              <PropertyRef Name="TempPolicyNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserInRole_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="UserInRole" Type="Self.UserInRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="UserInRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="InsuranceDBModelStoreContainer">
+          <EntitySet Name="InsurerDetail" EntityType="Self.InsurerDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MedicalDetails" EntityType="Self.MedicalDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NomineeDetail" EntityType="Self.NomineeDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PersonalDetail" EntityType="Self.PersonalDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PolicyDetail" EntityType="Self.PolicyDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PolicyNoGeneration" EntityType="Self.PolicyNoGeneration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PolicyStatus" EntityType="Self.PolicyStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserInRole" EntityType="Self.UserInRole" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_InsurerDetail_PolicyNoGeneration" Association="Self.FK_InsurerDetail_PolicyNoGeneration">
+            <End Role="PolicyNoGeneration" EntitySet="PolicyNoGeneration" />
+            <End Role="InsurerDetail" EntitySet="InsurerDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MedicalDetails_PolicyNoGeneration" Association="Self.FK_MedicalDetails_PolicyNoGeneration">
+            <End Role="PolicyNoGeneration" EntitySet="PolicyNoGeneration" />
+            <End Role="MedicalDetails" EntitySet="MedicalDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NomineeDetail_NomineeDetail" Association="Self.FK_NomineeDetail_NomineeDetail">
+            <End Role="PolicyNoGeneration" EntitySet="PolicyNoGeneration" />
+            <End Role="NomineeDetail" EntitySet="NomineeDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PolicyDetail_PolicyNoGeneration" Association="Self.FK_PolicyDetail_PolicyNoGeneration">
+            <End Role="PolicyNoGeneration" EntitySet="PolicyNoGeneration" />
+            <End Role="PolicyDetail" EntitySet="PolicyDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserInRole_Role" Association="Self.FK_UserInRole_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="UserInRole" EntitySet="UserInRole" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="InsuranceDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="InsurerDetail">
+          <Key>
+            <PropertyRef Name="InsurerId" />
+          </Key>
+          <Property Name="InsurerId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmailID" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MobileNo" Type="Int32" Nullable="false" />
+          <Property Name="State" Type="Int32" Nullable="false" />
+          <Property Name="DateofBirth" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Gender" Type="Int32" Nullable="false" />
+          <Property Name="AgentId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TempPolicyNo" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="PolicyNoGeneration" Relationship="Self.FK_InsurerDetail_PolicyNoGeneration" FromRole="InsurerDetail" ToRole="PolicyNoGeneration" />
+        </EntityType>
+        <EntityType Name="MedicalDetail">
+          <Key>
+            <PropertyRef Name="MedicalId" />
+          </Key>
+          <Property Name="MedicalId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TempPolicyNo" Type="Int64" />
+          <Property Name="MedicalCheckupDate" Type="DateTime" Precision="3" />
+          <Property Name="HospitalName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DoctorName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MedicalReportComment" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MedicalCheckRequired" Type="Boolean" />
+          <NavigationProperty Name="PolicyNoGeneration" Relationship="Self.FK_MedicalDetails_PolicyNoGeneration" FromRole="MedicalDetails" ToRole="PolicyNoGeneration" />
+        </EntityType>
+        <EntityType Name="NomineeDetail">
+          <Key>
+            <PropertyRef Name="NomineeId" />
+          </Key>
+          <Property Name="NomineeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TempPolicyNo" Type="Int64" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateofBirth" Type="DateTime" Precision="3" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Pincode" Type="Int32" />
+          <NavigationProperty Name="PolicyNoGeneration" Relationship="Self.FK_NomineeDetail_NomineeDetail" FromRole="NomineeDetail" ToRole="PolicyNoGeneration" />
+        </EntityType>
+        <EntityType Name="PersonalDetail">
+          <Key>
+            <PropertyRef Name="InsurerPersonalId" />
+          </Key>
+          <Property Name="InsurerPersonalId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TempPolicyNo" Type="Int64" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Pincode" Type="Int32" />
+          <Property Name="PersonalOccupation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AadharNo" Type="Int64" />
+          <Property Name="PanNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="PolicyDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TempPolicyNo" Type="Int64" Nullable="false" />
+          <Property Name="SumAssured" Type="Int64" Nullable="false" />
+          <Property Name="PolicyTerm" Type="Int32" />
+          <Property Name="SmokerStatus" Type="Int32" />
+          <Property Name="PolicyCreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="NextPremiumDueDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="PolicyNoGeneration" Relationship="Self.FK_PolicyDetail_PolicyNoGeneration" FromRole="PolicyDetail" ToRole="PolicyNoGeneration" />
+        </EntityType>
+        <EntityType Name="PolicyNoGeneration">
+          <Key>
+            <PropertyRef Name="TempPolicyNo" />
+          </Key>
+          <Property Name="TempPolicyNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PolicyNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PolicyStatus" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="InsurerDetails" Relationship="Self.FK_InsurerDetail_PolicyNoGeneration" FromRole="PolicyNoGeneration" ToRole="InsurerDetail" />
+          <NavigationProperty Name="MedicalDetails" Relationship="Self.FK_MedicalDetails_PolicyNoGeneration" FromRole="PolicyNoGeneration" ToRole="MedicalDetails" />
+          <NavigationProperty Name="NomineeDetails" Relationship="Self.FK_NomineeDetail_NomineeDetail" FromRole="PolicyNoGeneration" ToRole="NomineeDetail" />
+          <NavigationProperty Name="PolicyDetails" Relationship="Self.FK_PolicyDetail_PolicyNoGeneration" FromRole="PolicyNoGeneration" ToRole="PolicyDetail" />
+        </EntityType>
+        <EntityType Name="PolicyStatu">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Orderby" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OrderBy" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="UserInRoles" Relationship="Self.FK_UserInRole_Role" FromRole="Role" ToRole="UserInRole" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="StateID" />
+          </Key>
+          <Property Name="StateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Orderby" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmailId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LastLoginDate" Type="DateTime" Precision="0" />
+          <Property Name="LoginAttempt" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="IsAccountLock" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="UserInRole">
+          <Key>
+            <PropertyRef Name="UserInRoleId" />
+          </Key>
+          <Property Name="UserInRoleId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_UserInRole_Role" FromRole="UserInRole" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK_InsurerDetail_PolicyNoGeneration">
+          <End Role="PolicyNoGeneration" Type="Self.PolicyNoGeneration" Multiplicity="1" />
+          <End Role="InsurerDetail" Type="Self.InsurerDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PolicyNoGeneration">
+              <PropertyRef Name="TempPolicyNo" />
+            </Principal>
+            <Dependent Role="InsurerDetail">
+              <PropertyRef Name="TempPolicyNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MedicalDetails_PolicyNoGeneration">
+          <End Role="PolicyNoGeneration" Type="Self.PolicyNoGeneration" Multiplicity="0..1" />
+          <End Role="MedicalDetails" Type="Self.MedicalDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PolicyNoGeneration">
+              <PropertyRef Name="TempPolicyNo" />
+            </Principal>
+            <Dependent Role="MedicalDetails">
+              <PropertyRef Name="TempPolicyNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NomineeDetail_NomineeDetail">
+          <End Role="PolicyNoGeneration" Type="Self.PolicyNoGeneration" Multiplicity="1" />
+          <End Role="NomineeDetail" Type="Self.NomineeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PolicyNoGeneration">
+              <PropertyRef Name="TempPolicyNo" />
+            </Principal>
+            <Dependent Role="NomineeDetail">
+              <PropertyRef Name="TempPolicyNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PolicyDetail_PolicyNoGeneration">
+          <End Role="PolicyNoGeneration" Type="Self.PolicyNoGeneration" Multiplicity="1" />
+          <End Role="PolicyDetail" Type="Self.PolicyDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PolicyNoGeneration">
+              <PropertyRef Name="TempPolicyNo" />
+            </Principal>
+            <Dependent Role="PolicyDetail">
+              <PropertyRef Name="TempPolicyNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserInRole_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="UserInRole" Type="Self.UserInRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="UserInRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="InsuranceDBEntities" annotation:LazyLoadingEnabled="false">
+          <EntitySet Name="InsurerDetails" EntityType="Self.InsurerDetail" />
+          <EntitySet Name="MedicalDetails" EntityType="Self.MedicalDetail" />
+          <EntitySet Name="NomineeDetails" EntityType="Self.NomineeDetail" />
+          <EntitySet Name="PersonalDetails" EntityType="Self.PersonalDetail" />
+          <EntitySet Name="PolicyDetails" EntityType="Self.PolicyDetail" />
+          <EntitySet Name="PolicyNoGenerations" EntityType="Self.PolicyNoGeneration" />
+          <EntitySet Name="PolicyStatus" EntityType="Self.PolicyStatu" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="States" EntityType="Self.State" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UserInRoles" EntityType="Self.UserInRole" />
+          <AssociationSet Name="FK_InsurerDetail_PolicyNoGeneration" Association="Self.FK_InsurerDetail_PolicyNoGeneration">
+            <End Role="PolicyNoGeneration" EntitySet="PolicyNoGenerations" />
+            <End Role="InsurerDetail" EntitySet="InsurerDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MedicalDetails_PolicyNoGeneration" Association="Self.FK_MedicalDetails_PolicyNoGeneration">
+            <End Role="PolicyNoGeneration" EntitySet="PolicyNoGenerations" />
+            <End Role="MedicalDetails" EntitySet="MedicalDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NomineeDetail_NomineeDetail" Association="Self.FK_NomineeDetail_NomineeDetail">
+            <End Role="PolicyNoGeneration" EntitySet="PolicyNoGenerations" />
+            <End Role="NomineeDetail" EntitySet="NomineeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PolicyDetail_PolicyNoGeneration" Association="Self.FK_PolicyDetail_PolicyNoGeneration">
+            <End Role="PolicyNoGeneration" EntitySet="PolicyNoGenerations" />
+            <End Role="PolicyDetail" EntitySet="PolicyDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserInRole_Role" Association="Self.FK_UserInRole_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="UserInRole" EntitySet="UserInRoles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="InsuranceDBModelStoreContainer" CdmEntityContainer="InsuranceDBEntities">
+          <EntitySetMapping Name="InsurerDetails">
+            <EntityTypeMapping TypeName="InsuranceDBModel.InsurerDetail">
+              <MappingFragment StoreEntitySet="InsurerDetail">
+                <ScalarProperty Name="InsurerId" ColumnName="InsurerId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="DateofBirth" ColumnName="DateofBirth" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="AgentId" ColumnName="AgentId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="TempPolicyNo" ColumnName="TempPolicyNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MedicalDetails">
+            <EntityTypeMapping TypeName="InsuranceDBModel.MedicalDetail">
+              <MappingFragment StoreEntitySet="MedicalDetails">
+                <ScalarProperty Name="MedicalId" ColumnName="MedicalId" />
+                <ScalarProperty Name="TempPolicyNo" ColumnName="TempPolicyNo" />
+                <ScalarProperty Name="MedicalCheckupDate" ColumnName="MedicalCheckupDate" />
+                <ScalarProperty Name="HospitalName" ColumnName="HospitalName" />
+                <ScalarProperty Name="DoctorName" ColumnName="DoctorName" />
+                <ScalarProperty Name="MedicalReportComment" ColumnName="MedicalReportComment" />
+                <ScalarProperty Name="MedicalCheckRequired" ColumnName="MedicalCheckRequired" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NomineeDetails">
+            <EntityTypeMapping TypeName="InsuranceDBModel.NomineeDetail">
+              <MappingFragment StoreEntitySet="NomineeDetail">
+                <ScalarProperty Name="NomineeId" ColumnName="NomineeId" />
+                <ScalarProperty Name="TempPolicyNo" ColumnName="TempPolicyNo" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="DateofBirth" ColumnName="DateofBirth" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PersonalDetails">
+            <EntityTypeMapping TypeName="InsuranceDBModel.PersonalDetail">
+              <MappingFragment StoreEntitySet="PersonalDetail">
+                <ScalarProperty Name="InsurerPersonalId" ColumnName="InsurerPersonalId" />
+                <ScalarProperty Name="TempPolicyNo" ColumnName="TempPolicyNo" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="PersonalOccupation" ColumnName="PersonalOccupation" />
+                <ScalarProperty Name="AadharNo" ColumnName="AadharNo" />
+                <ScalarProperty Name="PanNo" ColumnName="PanNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PolicyDetails">
+            <EntityTypeMapping TypeName="InsuranceDBModel.PolicyDetail">
+              <MappingFragment StoreEntitySet="PolicyDetail">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TempPolicyNo" ColumnName="TempPolicyNo" />
+                <ScalarProperty Name="SumAssured" ColumnName="SumAssured" />
+                <ScalarProperty Name="PolicyTerm" ColumnName="PolicyTerm" />
+                <ScalarProperty Name="SmokerStatus" ColumnName="SmokerStatus" />
+                <ScalarProperty Name="PolicyCreatedDate" ColumnName="PolicyCreatedDate" />
+                <ScalarProperty Name="NextPremiumDueDate" ColumnName="NextPremiumDueDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PolicyNoGenerations">
+            <EntityTypeMapping TypeName="InsuranceDBModel.PolicyNoGeneration">
+              <MappingFragment StoreEntitySet="PolicyNoGeneration">
+                <ScalarProperty Name="TempPolicyNo" ColumnName="TempPolicyNo" />
+                <ScalarProperty Name="PolicyNo" ColumnName="PolicyNo" />
+                <ScalarProperty Name="PolicyStatus" ColumnName="PolicyStatus" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PolicyStatus">
+            <EntityTypeMapping TypeName="InsuranceDBModel.PolicyStatu">
+              <MappingFragment StoreEntitySet="PolicyStatus">
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Orderby" ColumnName="Orderby" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="InsuranceDBModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="OrderBy" ColumnName="OrderBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="InsuranceDBModel.State">
+              <MappingFragment StoreEntitySet="State">
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="Orderby" ColumnName="Orderby" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="InsuranceDBModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+                <ScalarProperty Name="LoginAttempt" ColumnName="LoginAttempt" />
+                <ScalarProperty Name="IsAccountLock" ColumnName="IsAccountLock" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserInRoles">
+            <EntityTypeMapping TypeName="InsuranceDBModel.UserInRole">
+              <MappingFragment StoreEntitySet="UserInRole">
+                <ScalarProperty Name="UserInRoleId" ColumnName="UserInRoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

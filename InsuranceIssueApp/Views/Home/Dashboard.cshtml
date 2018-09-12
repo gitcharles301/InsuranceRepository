@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="https://code.highcharts.com/highcharts.js"></script> 
+@Scripts.Render("~/Dashboard")
+
+@Html.AntiForgeryToken()
+  <!-- Area Chart Example-->
+
+<div id="divContainerChart"></div>
+<div class="table-responsive">
+    <div class="input-group-append float-right">
+        <input type="text" class="form-control" style="width:250px" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+        <button class="btn btn-primary" type="button">
+            <i class="fas fa-search"></i>
+        </button>
+    </div>
+   
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+    </table>
+</div>

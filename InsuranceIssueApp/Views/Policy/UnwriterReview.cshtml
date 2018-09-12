@@ -1,0 +1,255 @@
+﻿@{
+    ViewBag.Title = "UnwriterReview";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="modal-header">
+    <div class="col-md-5">
+        <label for="">From Date</label>
+        <input type="text" class="form-control date" id="dtpStartDate" />
+    </div>
+    <div class="col-md-5">
+        <label for="">To Date</label>
+        <input type="text" class="form-control date" id="dtpEndDate" />
+    </div>
+    <div class="col-md-1">
+        <button type="button" id="btnSearch" class="btn btn-primary" onclick="GetAllPolcies();" style="margin-top:30px;">Search</button>
+    </div>
+
+</div>
+<div id="divError" style="display:inline-block;color:Red;display:none;">
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0"></table>
+</div>
+
+<div id="divUpdateUWReview" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Unwriter Review Detail</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="col-md-6 col-xs-12">
+                    <div class="epolicy-paddingBottom">
+                        <div class="row">
+                            <div class="col-md-6 col-xs-12">
+                                <label class="boldText" for="IsAadhar">
+                                    Is Aadhar No Verified <span class="red">*</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" class="form-check-input" id="rdAdhaarYes" value="1" name="IsAadhar" tabindex="4">   
+                                    <input type="hidden" id="hdnTempPolicyNo" />
+                                    <label class="form-check-label" for="materialInline1">Yes</label>
+                                </div>
+
+                                <!-- Material inline 2 -->
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" class="form-check-input" id="rdAdhaarNo" value="0" name="IsAadhar">
+                                   
+                                    <label class="form-check-label" for="materialInline2">No</label>
+                                </div>                              
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-xs-12">
+                    <div class="epolicy-paddingBottom">
+                        <div class="row">
+                            <div class="col-md-6 col-xs-12">
+                                <label class="boldText" for="IsAadhar">
+                                    Is Pan No Verified <span class="red">*</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" class="form-check-input" id="rdPanYes" value="1" name="IsPanVerified" tabindex="4">
+                                    <label class="form-check-label" for="materialInline1">Yes</label>
+                                </div>
+
+                                <!-- Material inline 2 -->
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" class="form-check-input" id="rdPanNo" value="0" name="IsPanVerified">
+
+                                    <label class="form-check-label" for="materialInline2">No</label>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="epolicy-paddingBottom">
+                        <div class="row">
+                            <div class="col-md-6 col-xs-12">
+                                <label class="boldText" for="IsAadhar">
+                                    Is Medical Checkup Report Verified <span class="red">*</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" class="form-check-input" id="rdMedicalYes" value="1" name="IsMedicalCheckupVerified" tabindex="4">
+                                    <label class="form-check-label" for="materialInline1">Yes</label>
+                                </div>
+
+                                <!-- Material inline 2 -->
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" class="form-check-input" id="rdMedicalNo" value="0" name="IsMedicalCheckupVerified">
+
+                                    <label class="form-check-label" for="materialInline2">No</label>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnApproveUpdate" class="btn btn-success">Approve</button>
+                <button type="button" id="btnRejectUpdate" class="btn btn-danger">Reject</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+      $(document).ready(function () {
+          $("#lblPageName").text("Unwriter Review");
+          $("#divDashboardHeader,#divDashboard").hide();
+          $('.date').datepicker({
+              dateFormat: 'dd/mm/yy',
+              changeYear: true,
+              maxDate: '0'
+
+          });  
+
+        
+
+          $("#btnApproveUpdate").click(function () {
+              UpdateUWReview(4);
+          });
+
+          $("#btnRejectUpdate").click(function () {
+              UpdateUWReview(3);
+          });
+    });
+      function getWebapiBaseUrl() {
+          var uri = 'http://localhost/InsuranceIssueApp.WebAPI/';
+          return uri;
+      }
+      function UpdateUWReview(id)
+      {
+          if ($("input[name='IsAadhar']:checked").val() == -1) {
+              $("#divError").show();
+              $("#divError").html("Please select IsAadharNo Verified!");
+              return false;
+          }
+          else if ($("input[name='IsPanVerified']:checked").val() == -1) {
+              $("#divError").show();
+              $("#divError").html("Please select IsPanVerified!");
+              return false;
+          }
+          else if ($("input[name='IsMedicalCheckupVerified']:checked").val() == -1) {
+              $("#revGender").show();
+              $("#revGender").html("Please enter IsMedicalCheckupVerified!");
+              return false;
+          }               
+          else {
+              var UnderWriterReview = {
+                  IsAadharNoVerified: $("input[name='IsAadhar']:checked").val(),
+                  IsPanNoVerified: $("input[name='IsPanVerified']:checked").val(),
+                  IsMedicalCheckupVerified: $("input[name='IsMedicalCheckupVerified']:checked").val(),
+                  PolicyStatus: id,
+                  TempPolicyNo: $("#hdnTempPolicyNo").val()
+              };
+              var baseapiurl = getWebapiBaseUrl() + 'api/InsuranceAPI/AddUnwriterReviewDetail';
+              debugger;
+              $.ajax({
+                  url: baseapiurl,
+                  data: UnderWriterReview,
+                  type: 'POST',
+                  dataType: 'json',
+                  success: function (jData) {
+                      debugger;
+                      $("#divError").show();
+                      $("#divError").html("Unwriter Review updated successfully!");
+                  },
+                  error: function (err) {
+                      // alert(err);
+                  }
+              });
+          }
+      }
+      function GetAllPolcies() {
+
+          if ($("#dtpStartDate").val() == "") {
+              $("#divError").show();
+              $("#divError").html("Please enter FromDate!");
+              return false;
+          }
+          else if ($("#dtpEndDate").val() == "") {
+              $("#divError").show();
+              $("#divError").html("Please enter ToDate!");
+              return false;
+          }
+          else {
+
+              var ReportFilters = {
+                  FromDate: $("#dtpStartDate").val(),
+                  ToDate: $("#dtpEndDate").val()
+              };
+              $.ajax({
+                  url: '/InsuranceIssueApp.Web/Policy/GetAllPoliciesForReview?fromdate=' + $("#dtpStartDate").val() + '&todate=' + $("#dtpEndDate").val(),
+                  type: "POST",
+                  data: ReportFilters,
+                  dataType: 'json',
+                  success: function (data) {
+                      if (data != null && data.length > 0) {
+                          var table = $('#dataTable');
+                          table.html('');
+                          var tableMarkup = "<tr><td>Policy No</td><td>Customer Name</td><td>Date Of Birth</td><td>Phone No</td><td>Sum Assured</td><td>Policy Created Date</td><td>PremiumAmount</td><td>PolicyStatus</td><td>Update Review</td></tr>";
+
+                          $.each(data, function () {
+                              tableMarkup = tableMarkup + "<tr><td>" + this.PolicyNo + "</td><td>" + this.CustomerName + "</td><td>" + this.DOB + "</td><td>" + this.MobileNo + "</td><td>" + this.SumAssured + "</td><td>" + this.PolicyDate + "</td>";
+                                                         
+                              tableMarkup += "<td>" + this.PremiumAmount + "</td>";
+                              tableMarkup += "<td>" + this.PolicyStatusName + "</td>";
+                              tableMarkup += '<td><button type="button" onclick="loadUpdateUWReview(' + this.TempPolicyNo + ')"  class="btn btn-danger">Update Review</button> </td></tr>';
+                          });
+
+                          table.append(tableMarkup);
+                          $("#divError").hide();
+                      }
+                      else {
+                          $("#divError").show();
+                          $("#divError").html("No Records Found!");
+
+                      }
+                      // table.append('</table>');
+                  },
+                  error: function (err) {
+                      $("#divError").show();
+                      $("#divError").html(err);
+                      var table = $('#dataTable');
+                      table.html('');
+                  }
+              });
+          }
+
+      }
+
+      function loadUpdateUWReview(ID) {
+          $('#divUpdateUWReview').modal('show')
+          /// $("#divCallbackUpdate").show();
+          $("#hdnTempPolicyNo").val(ID);
+      }
+</script>

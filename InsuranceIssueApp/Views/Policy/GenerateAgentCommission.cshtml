@@ -1,0 +1,115 @@
+﻿
+@{
+    ViewBag.Title = "GenerateAgentCommission";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="modal-header">
+    <div class="col-md-3">
+        <label for="">From Date</label>
+        <input type="text" class="form-control date" id="dtpStartDate" />
+    </div>
+    <div class="col-md-3">
+        <label for="">To Date</label>
+        <input type="text" class="form-control date" id="dtpEndDate" />
+    </div>    
+    <div class="col-md-1">
+        <button type="button" id="btnSearch" class="btn btn-primary" onclick="GenerateReport();" style="margin-top:30px;">Generate</button>
+    </div>
+
+</div>
+
+<div id="divError" style="display:inline-block;color:Red;display:none;">
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0"></table>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(document).ajaxStart(function () {
+            $("#wait").css("display", "block");
+        });
+        $(document).ajaxComplete(function () {
+            $("#wait").css("display", "none");
+        });
+
+        $("#lblPageName").text("Generate Agent Commission");
+        $("#divDashboardHeader,#divDashboard").hide();
+        $('.date').datepicker({
+            dateFormat: 'dd/mm/yy',
+            changeYear: true,
+            maxDate: '0'
+
+        });
+
+    
+    });
+    function GenerateReport() {
+        $("#divError").hide();
+        if ($("#dtpStartDate").val() == "") {
+            $("#divError").show();
+            $("#divError").html("Please enter FromDate!");
+            return false;
+        }
+        else if ($("#dtpEndDate").val() == "") {
+            $("#divError").show();
+            $("#divError").html("Please enter ToDate!");
+            return false;
+        }
+        else {
+
+            var ReportFilters = {
+                FromDate: $("#dtpStartDate").val(),
+                ToDate: $("#dtpEndDate").val()
+            };
+
+            ///var baseapiurl = getWebapiBaseUrl() + 'api/InsuranceAPI/CreateNomineeDetail';
+            var reportflag = 'GenerateCommission';
+
+            $.ajax({
+                url: '/InsuranceIssueApp.Web/Policy/GenerateAgentCommissionUpdate?fromdate=' + $("#dtpStartDate").val() + '&todate=' + $("#dtpEndDate").val() + '&agentid=' + $("#hdnUserid").val() + '&reportflag=' + reportflag,
+                type: "POST",
+                data: ReportFilters,
+                dataType: 'json',
+                success: function (data) {
+                    if (data != null && data.length > 0) {
+                        var table = $('#dataTable');
+                        table.html('');
+                        var tableMarkup = "<tr><td>Policy No</td><td>Agent Name</td><td>SumAssured</td><td>PremiumAmount</td><td>CommissionAmount</td></tr>";
+
+                        $.each(data, function () {
+                            tableMarkup = tableMarkup + "<tr><td>" + this.PolicyNo + "</td><td>" + this.AgentName + "</td><td>" + this.SumAssured + "</td>";
+                            tableMarkup += "<td>" + this.PremiumAmount + "</td>";
+                            tableMarkup += "<td>" + this.CommissionAmount + "</td></tr>";
+
+                        });
+
+                        table.append(tableMarkup);
+                        $("#divError").show();
+                        $("#divError").html("Commission Genereated successfully!");
+                    }
+                    else {
+                        $("#divError").show();
+                        $("#divError").html("No Records Found!");
+                        var table = $('#dataTable');
+                        table.html('');
+                    }
+                    // table.append('</table>');
+                },
+                error: function (err) {
+                    $("#divError").show();
+                    $("#divError").html(err);
+                }
+            });
+        }
+
+    }
+
+    function loadEnquiryCallback(ID) {
+        $('#divCallbackUpdate').modal('show')
+        /// $("#divCallbackUpdate").show();
+        $("#hdnEquiryID").val(ID);
+    }
+</script>
+
+

@@ -1,0 +1,818 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Scripts.Render("~/app")
+<div class="row">
+    <button type="button" id="tabBasicDetail" class="btn btn-secondary">Basic Details &raquo; </button>
+    <button type="button" id="tabPersonalDetail" class="btn btn-secondary">Personal Details &raquo; </button>
+    <button type="button" id="tabNomineeDetail" class="btn btn-secondary">Nominee Details &raquo;</button>
+    <button type="button" id="tabMedicalDetail" class="btn btn-secondary">Medical Details &raquo;</button>
+    <button type="button" id="tabDocumentUpload" class="btn btn-secondary">Supporting Documents &raquo;</button>
+    <button type="button" id="tabPolicyDetail" class="btn btn-secondary">Policy Details &raquo;</button>   
+
+</div>
+<div class="alert alert-success" id="divError" style="display:none">
+    <strong>Success!</strong> Indicates a successful or positive action.
+</div>
+    <div class="row" id="BasicDetail">
+        <div class=" text_E_policy_wrapper">
+            <div class="col-md-12 ">
+                <h1 class="text_E_policy">
+                    BASIC DETAILS
+                </h1>
+            </div>
+        </div>
+        <div class="clearfix">
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <div class="epolicy-paddingBottom ">
+                <div class="row">
+                    <div class=" col-md-3 col-xs-12">
+                      
+                    </div>
+                    <div class="col-md-8 col-xs-12">
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <div class="epolicy-paddingBottom">
+                <div class="row">
+                    <div class="col-md-3 col-xs-12 text-left">
+                        <label class="boldText" for="firstname">
+                            First Name <span class="red">*</span>
+                        </label>
+                    </div>
+                    <div class="col-md-8 col-xs-12">
+                        <input name="txtFirstName" type="text" maxlength="30" required  id="txtFirstName" tabindex="1" class="form-control fullwidth e-policy-marginbottom-inputs">
+                        <span id="revFirstName" style="display:inline-block;color:Red;width:30px;display:none;"></span>
+                        <span id="rfvFirstName" style="display:inline-block;color:Red;width:60px;display:none;"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <div class="epolicy-paddingBottom ">
+                <div class="row">
+                    <div class="col-md-3 col-xs-12 text-left">
+                        <label class="boldText" for="firstname">
+                            Middle Name<!-- <span class="red">*</span>-->
+                        </label>
+                    </div>
+                    <div class="col-md-8 col-xs-12">
+                        <input name="txtMiddleName" type="text" maxlength="30" id="txtMiddleName" tabindex="2" class="form-control fullwidth e-policy-marginbottom-inputs">
+                        <span id="revMiddleName" style="display:inline-block;color:Red;width:30px;display:none;"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <div class="epolicy-paddingBottom">
+                <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                        <label class="boldText" for="firstname">
+                            Last Name <span class="red">*</span>
+                        </label>
+                    </div>
+                    <div class="col-md-8 col-xs-12">
+                        <input name="txtLastName" type="text" maxlength="30" id="txtLastName" required  tabindex="3" class="form-control fullwidth e-policy-marginbottom-inputs">
+                        <span id="ReqValLastName" style="color:Red;display:none;"></span>
+                        <span id="revLastName" style="color:Red;display:none;"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <div class="epolicy-paddingBottom">
+                <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                        <label class="boldText" for="firstname">
+                            Gender <span class="red">*</span>
+                        </label>
+                    </div>
+                    <div class="col-md-8 col-xs-12">
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" id="rdMale" value="1" name="gender" tabindex="4">
+                            <i class="fa fa-male" aria-hidden="true"></i>
+                            <label class="form-check-label" for="materialInline1">Male</label>
+                        </div>
+
+                        <!-- Material inline 2 -->
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" id="rdFemale" value="2" name="gender">
+                            <i class="fa fa-female" aria-hidden="true"></i>
+                            <label class="form-check-label" for="materialInline2">Female</label>
+                        </div>
+
+                        <!-- Material inline 3 -->
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" id="rdTransgender" value="3" name="gender">
+                            <label class="form-check-label" for="materialInline3">Transgender</label>
+                        </div>
+                        <span id="revGender" style="color:Red;display:none;"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <div class="epolicy-paddingBottom">
+                <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                        <label class="boldText" for="firstname">
+                            Date of Birth <span class="red">*</span>
+                        </label>
+                    </div>
+                    <div class="col-md-8 col-xs-12">
+                        <input name="txtDateofBirth" type="text" maxlength="30" id="txtDateofBirth" required tabindex="5" class="form-control fullwidth e-policy-marginbottom-inputs date">
+                        <span id="ReqValDateofBirth" style="color:Red;display:none;"></span>
+                        <span id="revDateofBirth" style="color:Red;display:none;"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <div class="epolicy-paddingBottom   ">
+                <div class="row">
+                    <div class=" col-md-3 col-xs-12">
+                        <label class="boldText " for="firstname">
+                            Email ID <span class="red">*</span>
+                        </label>
+                    </div>
+                    <div class="col-md-8 col-xs-12">
+                        <input name="txtEmailId" type="email" required  maxlength="45" id="txtEmailId" tabindex="6" class="form-control  email fullwidth e-policy-marginbottom-inputs"  onkeyup="ValidateEmailID(this);" oncopy="return false" oncut="return false" onpaste="return false">
+
+                        <span id="rfvEmailId" style="color:Red;display:none;"></span>
+                        <span id="revEmailValidator" style="display:inline-block;color:Red;width:30px;display:none;"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <div class="epolicy-paddingBottom ">
+                <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                        <label class="boldText" for="firstname">
+                            Mobile No. <span class="red">*</span>
+                        </label>
+                    </div>
+                    <div class="col-md-8 col-xs-12">
+                        <input name="txtMobileNo" type="text" maxlength="10" id="txtMobileNo" required  tabindex="7" class="form-control  tel mobiletxt wordTxt mobno fullwidth e-policy-marginbottom-inputs" onpaste="return false">
+
+                        <span id="rfvMobileNo" style="color:Red;display:none;"></span>
+
+
+                        <span id="revMobileNo" style="color:Red;display:none;"></span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <div class="epolicy-paddingBottom ">
+                <div class="row">
+                    <div class="col-md-3 text-left">
+                        <label class="boldText " for="firstname">
+                            State <span class="red">*</span>
+                        </label>
+                    </div>
+                    <div class="col-md-8">
+                        <select name="ddlMailingState" id="ddlMailingState" tabindex="8" class="form-control stateSelect e-policy-marginbottom-inputs">
+                            <option selected="selected" value="0">Select</option>
+                            <option value="1">TAMIL NADU</option>
+                            <option value="2">KERALA</option>
+                            <option value="3">ANDHRA PRADESH</option>
+                        </select>
+                        <span id="rfvMailingState" style="color:Red;display:none;"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-xs-12" style="text-align:right!important">
+            <button type="button" id="btnStartOver" class="btn btn-success pull-right">Start Over</button> &nbsp;&nbsp;&nbsp;
+            <button type="button" id="btnBasicDetail" class="btn btn-success pull-right">Next &raquo; </button>
+        </div>
+    
+    </div>
+
+ <!-- Personal Detail Tab Code Starts Here-->
+
+<div class="row" id="PersonalDetail">
+    <div class=" text_E_policy_wrapper">
+        <div class="col-md-12 ">
+            <h1 class="text_E_policy">
+                PERSONAL DETAILS
+            </h1>
+            
+        </div>
+       
+    </div>
+   
+    <div class="clearfix">
+        
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom ">
+            <div class="row">
+                <div class=" col-md-3 col-xs-12">
+
+                </div>
+                <div class="col-md-8 col-xs-12">
+
+                </div>
+            </div>
+        </div>
+    </div>   
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom">
+            <div class="row">
+                <div class="col-md-3 col-xs-12 text-left">
+                    <label class="boldText" for="firstname">
+                        Address <span class="red">*</span>
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <textarea name="txtAddress" type="text" maxlength="300" cols="8" rows="3" required id="txtAddress" tabindex="9" class="form-control fullwidth e-policy-marginbottom-inputs"></textarea>
+                    <span id="revAddress" style="display:inline-block;color:Red;width:30px;display:none;"></span>
+                </div>
+            </div>
+        </div>
+    </div>   
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom">
+            <div class="row">
+                <div class="col-md-3 col-xs-12">
+                    <label class="boldText" for="firstname">
+                        City <span class="red">*</span>
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <select name="ddlCity" id="ddlCity" tabindex="10" class="form-control stateSelect e-policy-marginbottom-inputs">
+                        <option selected="selected" value="0">Select</option>
+                        <option value="1">CHENNAI</option>
+                        <option value="2">MADURAI</option>
+                        <option value="3">COIMBATORE</option>
+                    </select>                    
+                    <span id="revCity" style="color:Red;display:none;"></span>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom">
+            <div class="row">
+                <div class="col-md-3 col-xs-12">
+                    <label class="boldText" for="firstname">
+                        Pincode <span class="red">*</span>
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <input name="txtPincode" type="text" maxlength="6" id="txtPincode" required tabindex="11" class="form-control fullwidth e-policy-marginbottom-inputs">
+                    <span id="revPincode" style="color:Red;display:none;"></span>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom">
+            <div class="row">
+                <div class="col-md-3 col-xs-12">
+                    <label class="boldText" for="firstname">
+                        Occupation <span class="red">*</span>
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <input name="txtOccupation" type="text" maxlength="30" id="txtOccupation" required tabindex="12" class="form-control fullwidth e-policy-marginbottom-inputs">
+                    <span id="revOccupation" style="color:Red;display:none;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom   ">
+            <div class="row">
+                <div class=" col-md-3 col-xs-12">
+                    <label class="boldText " for="firstname">
+                        Aadhar No. <span class="red">*</span>
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <input name="txtAadhar" type="text" required maxlength="12" id="txtAadhar" tabindex="13" class="form-control  fullwidth e-policy-marginbottom-inputs" oncopy="return false" oncut="return false" onpaste="return false">
+
+                    <span id="revAadhar" style="display:inline-block;color:Red;width:30px;display:none;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom ">
+            <div class="row">
+                <div class="col-md-3 col-xs-12">
+                    <label class="boldText" for="firstname">
+                        Pan No. <span class="red">*</span>
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <input name="txtPanNo" type="text" maxlength="10" id="txtPanNo" required tabindex="14" class="form-control fullwidth e-policy-marginbottom-inputs" onpaste="return false">
+
+                    <span id="revPanNo" style="color:Red;display:none;"></span>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 col-xs-12" style="text-align:right!important">
+        <button type="button" id="btnPersonalPrevious" class="btn btn-success pull-right">Previous</button> &nbsp;&nbsp;&nbsp;
+        <button type="button" id="btnPersonalDetail" class="btn btn-success pull-right">Next &raquo; </button>
+    </div>
+
+</div>
+
+<!-- Nominee Details starts Here -->
+<div class="row" id="NomineeDetail">
+    <div class=" text_E_policy_wrapper">
+        <div class="col-md-12 ">
+            <h1 class="text_E_policy">
+                NOMINEE DETAILS
+            </h1>
+        </div>
+    </div>
+    <div class="clearfix">
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom ">
+            <div class="row">
+                <div class=" col-md-3 col-xs-12">
+
+                </div>
+                <div class="col-md-8 col-xs-12">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom">
+            <div class="row">
+                <div class="col-md-3 col-xs-12 text-left">
+                    <label class="boldText" for="firstname">
+                        First Name <span class="red">*</span>
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <input name="txtNomineeFirstName" type="text" maxlength="30" required id="txtNomineeFirstName" tabindex="20" class="form-control fullwidth e-policy-marginbottom-inputs">
+                    <span id="revNomineeFirstName" style="display:inline-block;color:Red;width:30px;display:none;"></span>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom ">
+            <div class="row">
+                <div class="col-md-3 col-xs-12 text-left">
+                    <label class="boldText" for="firstname">
+                        Middle Name<!-- <span class="red">*</span>-->
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <input name="txtNomineeMiddleName" type="text" maxlength="30" id="txtNomineeMiddleName" tabindex="21" class="form-control fullwidth e-policy-marginbottom-inputs">
+                    <span id="revNomineeMiddleName" style="display:inline-block;color:Red;width:30px;display:none;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom">
+            <div class="row">
+                <div class="col-md-3 col-xs-12">
+                    <label class="boldText" for="firstname">
+                        Last Name <span class="red">*</span>
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <input name="txtNomineeLastName" type="text" maxlength="30" id="txtNomineeLastName" required tabindex="22" class="form-control fullwidth e-policy-marginbottom-inputs">
+
+                    <span id="revNomineeLastName" style="color:Red;display:none;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom">
+            <div class="row">
+                <div class="col-md-3 col-xs-12">
+                    <label class="boldText" for="firstname">
+                        Date of Birth <span class="red">*</span>
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <input name="txtNomineeDateofBirth" type="text" maxlength="30" id="txtNomineeDateofBirth" required tabindex="23" class="form-control fullwidth e-policy-marginbottom-inputs date">                   
+                    <span id="revNomineeDateofBirth" style="color:Red;display:none;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom">
+            <div class="row">
+                <div class="col-md-3 col-xs-12 text-left">
+                    <label class="boldText" for="firstname">
+                        Address <span class="red">*</span>
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <input name="txtNomineeAddress" type="text" maxlength="300" required id="txtNomineeAddress" tabindex="24" class="form-control fullwidth e-policy-marginbottom-inputs">
+                    <span id="revNomineeAddress" style="display:inline-block;color:Red;width:30px;display:none;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom">
+            <div class="row">
+                <div class="col-md-3 col-xs-12">
+                    <label class="boldText" for="firstname">
+                        City <span class="red">*</span>
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <select name="ddlNomineeCity" id="ddlNomineeCity" tabindex="25" class="form-control stateSelect e-policy-marginbottom-inputs">
+                        <option selected="selected" value="0">Select</option>
+                        <option value="1">CHENNAI</option>
+                        <option value="2">MADURAI</option>
+                        <option value="3">COIMBATORE</option>
+                    </select>
+                    <span id="revCity" style="color:Red;display:none;"></span>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom">
+            <div class="row">
+                <div class="col-md-3 col-xs-12">
+                    <label class="boldText" for="firstname">
+                        Pincode <span class="red">*</span>
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <input name="txtNomineePincode" type="text" maxlength="6" id="txtNomineePincode" required tabindex="26" class="form-control fullwidth e-policy-marginbottom-inputs">
+                    <span id="revNomineePincode" style="color:Red;display:none;"></span>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-12 col-xs-12" style="text-align:right!important">
+        <button type="button" id="btnNomineePrevious" class="btn btn-success pull-right">Previous</button> &nbsp;&nbsp;&nbsp;
+        <button type="button" id="btnNomineeDetail" class="btn btn-success pull-right">Next &raquo; </button>
+    </div>
+
+</div>
+
+
+<!-- Medical Detail Starts Here -->
+
+<div class="row" id="MedicalDetail">
+    <div class=" text_E_policy_wrapper">
+        <div class="col-md-12 ">
+            <h1 class="text_E_policy">
+                MEDICAL DETAILS
+            </h1>
+        </div>
+    </div>
+    <div class="clearfix">
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom ">
+            <div class="row">
+                <div class=" col-md-3 col-xs-12">
+
+                </div>
+                <div class="col-md-8 col-xs-12">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom">
+            <div class="row">
+                <div class="col-md-3 col-xs-12">
+                    <label class="boldText" for="firstname">
+                        Medical Checkup Date <span class="red">*</span>
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <input name="txtCheckupDate" type="text" maxlength="30" id="txtCheckupDate" required tabindex="8" class="form-control fullwidth e-policy-marginbottom-inputs date">
+                    <span id="revtxtCheckupDate" style="color:Red;display:none;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom ">
+            <div class="row">
+                <div class="col-md-3 col-xs-12 text-left">
+                    <label class="boldText" for="firstname">
+                        Hospital Name<!-- <span class="red">*</span>-->
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <input name="txtHospitalName" type="text" maxlength="50" id="txtHospitalName" tabindex="7" class="form-control fullwidth e-policy-marginbottom-inputs">
+                    <span id="revHospitalName" style="display:inline-block;color:Red;width:30px;display:none;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom">
+            <div class="row">
+                <div class="col-md-3 col-xs-12">
+                    <label class="boldText" for="firstname">
+                        Doctor Name <span class="red">*</span>
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <input name="txtDoctorName" type="text" maxlength="50" id="txtDoctorName" required tabindex="8" class="form-control fullwidth e-policy-marginbottom-inputs">
+
+                    <span id="revDoctorName" style="color:Red;display:none;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom">
+            <div class="row">
+                <div class="col-md-3 col-xs-12 text-left">
+                    <label class="boldText" for="firstname">
+                        Medical Report Description <span class="red">*</span>
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <textarea name="txtReportComments" id="txtReportComments" maxlength="300" rows="5" cols="25" tabindex="6" class="form-control fullwidth e-policy-marginbottom-inputs"></textarea>
+
+                    <span id="revNomineeAddress" style="display:inline-block;color:Red;width:30px;display:none;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col-md-12 col-xs-12" style="text-align:right!important">
+        <button type="button" id="btnMedicalPrevious" class="btn btn-success pull-right">Previous</button> &nbsp;&nbsp;&nbsp;
+        <button type="button" id="btnMedicalDetail" class="btn btn-success pull-right">Next &raquo; </button>
+    </div>
+
+</div>
+
+<!-- Document Upload -->
+<div class="row" id="DocumentUpload">
+    <div class=" text_E_policy_wrapper">
+        <div class="col-md-12 ">
+            <h1 class="text_E_policy">
+                SUPPORTING DOCUMENT
+            </h1>
+        </div>
+    </div>
+    <div class="clearfix">
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom ">
+            <div class="row">
+                <div class=" col-md-3 col-xs-12">
+
+                </div>
+                <div class="col-md-8 col-xs-12">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom">
+            <div class="row">
+                <div class="col-md-3 col-xs-12">
+                    <label class="boldText" for="firstname">
+                        Aadhar Document<span class="red">*</span>
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <a href="#"><input type="file" id="AadharDocumentfile" accept="image/png, image/jpeg" /></a>
+                    <span id="revAadharDocumentfile" style="color:Red;display:none;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom ">
+            <div class="row">
+                <div class="col-md-3 col-xs-12 text-left">
+                    <label class="boldText" for="firstname">
+                        Pan Document<!-- <span class="red">*</span>-->
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <a href="#"><input type="file" id="PanDocumentfile" accept="image/png, image/jpeg" /></a>
+                    <span id="revPanDocumentfile" style="color:Red;display:none;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom">
+            <div class="row">
+                <div class="col-md-3 col-xs-12">
+                    <label class="boldText" for="firstname">
+                        Medical Report <span class="red">*</span>
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <a href="#"><input type="file" id="MedicalDocumentfile" accept="image/png, image/jpeg" /></a>
+                    <span id="revMedicalDocumentfile" style="color:Red;display:none;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-xs-12">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0"></table>
+        </div>
+    </div>
+    <div class="col-md-12 col-xs-12" style="text-align:right!important">
+        <button type="button" id="btnDocumentUploadPrevious" class="btn btn-success pull-right">Previous</button> &nbsp;&nbsp;&nbsp;
+        <button type="button" id="btnDocumentUpload" class="btn btn-success pull-right">Next &raquo; </button>
+    </div>
+
+</div>
+<!--Policy Detail Starts here-->
+
+<div class="row" id="PolicyDetail">
+    <div class=" text_E_policy_wrapper">
+        <div class="col-md-12 ">
+            <h1 class="text_E_policy">
+                POLICY DETAILS
+            </h1>
+        </div>
+    </div>
+    <div class="clearfix">
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom ">
+            <div class="row">
+                <div class=" col-md-3 col-xs-12">
+
+                </div>
+                <div class="col-md-8 col-xs-12">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom ">
+            <div class="row">
+                <div class="col-md-3 col-xs-12 text-left">
+                    <label class="boldText" for="firstname">
+                        Sum Assured<!-- <span class="red">*</span>-->
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <input name="txtSumAssured" type="text" maxlength="30" id="txtSumAssured" onkeypress="return isNumberKey(event)"  tabindex="7" class="form-control fullwidth e-policy-marginbottom-inputs">
+                    <span id="revSumAssured" style="display:inline-block;color:Red;width:30px;display:none;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom ">
+            <div class="row">
+                <div class="col-md-3 col-xs-12 text-left">
+                    <label class="boldText" for="firstname">
+                        Policy Payment Mode<!-- <span class="red">*</span>-->
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <select name="ddlPolicyPaymentMode" id="ddlPolicyPaymentMode" tabindex="11" class="form-control stateSelect e-policy-marginbottom-inputs">
+                        <option selected="selected" value="0">Select</option>
+                        <option value="1">QUARTERLY</option>
+                        <option value="2">HALF YEARLY</option>
+                        <option value="3">ANNUALLY</option>
+                    </select>
+                    <span id="revPolicyPaymentMode" style="display:inline-block;color:Red;width:30px;display:none;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom ">
+            <div class="row">
+                <div class="col-md-3 col-xs-12 text-left">
+                    <label class="boldText" for="firstname">
+                        Policy Term<!-- <span class="red">*</span>-->
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <select name="ddlPolicyTerm" id="ddlPolicyTerm" tabindex="11" class="form-control stateSelect e-policy-marginbottom-inputs">
+                        <option selected="selected" value="0">Select</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                    </select>
+                    <span id="revPolicyTerm" style="display:inline-block;color:Red;width:30px;display:none;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom ">
+            <div class="row">
+                <div class="col-md-3 col-xs-12 text-left">
+                    <label class="boldText" for="firstname">
+                        Premium Amount<!-- <span class="red">*</span>-->
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <input name="txtPremiumAmount" type="text" maxlength="30" id="txtPremiumAmount" tabindex="7" onkeypress="return isNumberKey(event)"  class="form-control fullwidth e-policy-marginbottom-inputs">
+                    <span id="revPremiumAmount" style="display:inline-block;color:Red;width:30px;display:none;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom ">
+            <div class="row">
+                <div class="col-md-3 col-xs-12 text-left">
+                    <label class="boldText" for="firstname">
+                        Policy Type<!-- <span class="red">*</span>-->
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <select name="ddlPolicyTypeId" id="ddlPolicyTypeId" tabindex="11" class="form-control stateSelect e-policy-marginbottom-inputs">
+                        <option selected="selected" value="0">Select</option>
+                        <option value="1">Term Life Insurance</option>
+                        <option value="2">Whole Life Policy</option>
+                        <option value="3">Endowment Plans</option>
+                        <option value="4">Unit Linked Insurance Plans</option>
+                    </select>
+                    <span id="revPolicyType" style="display:inline-block;color:Red;width:30px;display:none;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="epolicy-paddingBottom ">
+            <div class="row">
+                <div class="col-md-3 col-xs-12 text-left">
+                    <label class="boldText" for="firstname">
+                        Smoker Status<!-- <span class="red">*</span>-->
+                    </label>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <select name="ddlSmoker" id="ddlSmoker" tabindex="11" class="form-control stateSelect e-policy-marginbottom-inputs">
+                        <option selected="selected" value="0">Select</option>
+                        <option value="1">SMOKER</option>
+                        <option value="2">NON SMOKER</option>
+                    </select>
+                    <span id="revSmoker" style="display:inline-block;color:Red;width:30px;display:none;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col-md-12 col-xs-12" style="text-align:right!important">
+        <button type="button" id="btnPolicyDetailPrevious" class="btn btn-success pull-right">Previous</button> &nbsp;&nbsp;&nbsp;
+        <button type="button" id="btnPolicyDetail" class="btn btn-success pull-right">Final Submit &raquo; </button>
+    </div>
+
+</div>
+@Html.AntiForgeryToken()    
+
+<script>
+    $(document).ready(function () {
+        var tempPolicyNo = @ViewBag.TempPolicyNo;
+       
+        $('#hdnTempPolicyNo').val(tempPolicyNo);
+        if (tempPolicyNo != 0) {
+            
+            loadAllPolicyDetail();
+        }
+    TabVisiable('BD');
+    });
+</script>
