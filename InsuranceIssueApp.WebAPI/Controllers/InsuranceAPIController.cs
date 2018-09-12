@@ -12,9 +12,11 @@ using System.Diagnostics;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Configuration;
+using System.Web.Http.Cors;
 
 namespace InsuranceIssueApp.WebAPI.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class InsuranceAPIController : ApiController
     {
         // GET api/<controller>
