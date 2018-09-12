@@ -9,6 +9,9 @@ using InsuranceIssueApp.Repository;
 using System.Globalization;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using System.Configuration;
 
 namespace InsuranceIssueApp.WebAPI.Controllers
 {
@@ -39,17 +42,17 @@ namespace InsuranceIssueApp.WebAPI.Controllers
             long result = 0;
             try
             {
-                        detail.MiddleName = detail.MiddleName == null ? "" : detail.MiddleName;
-                        detail.TempPolicyNo = 0;
-                        detail.CreatedBy = detail.AgentId;
-                        detail.CreatedDate = DateTime.Now;
-                        detail.ModifyDate = DateTime.Now;
-                        detail.PolicyStatus = 1;
-                        result = repository.AddBasicDetail(detail);
+                detail.MiddleName = detail.MiddleName == null ? "" : detail.MiddleName;
+                detail.TempPolicyNo = 0;
+                detail.CreatedBy = detail.AgentId;
+                detail.CreatedDate = DateTime.Now;
+                detail.ModifyDate = DateTime.Now;
+                detail.PolicyStatus = 1;
+                result = repository.AddBasicDetail(detail);
             }
             catch (Exception dbEx)
             {
-                return  Convert.ToString(result);
+                return Convert.ToString(result);
             }
             return Convert.ToString(result);
         }
@@ -59,7 +62,7 @@ namespace InsuranceIssueApp.WebAPI.Controllers
         {
             long result = 0;
             try
-            {                
+            {
                 result = repository.AddPersonalDetail(detail);
             }
             catch (Exception dbEx)
@@ -129,6 +132,8 @@ namespace InsuranceIssueApp.WebAPI.Controllers
             try
             {
                 result = repository.AddUnwriterReviewDetail(detail);
+                PolicyDetailViewModel policydetail = repository.GetPolicyAllDetail(detail.TempPolicyNo);
+                SendApproveMail(policydetail);
             }
             catch (Exception dbEx)
             {
@@ -161,7 +166,7 @@ namespace InsuranceIssueApp.WebAPI.Controllers
                 list = repository.RepAgentSalesResult(fromDate, toDate, agentid);
                 return list;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return list;
             }
@@ -186,6 +191,30 @@ namespace InsuranceIssueApp.WebAPI.Controllers
         {
             List<NameValueType> list = repository.BindDropDownList("AgentList");
             return list;
+        }
+
+        private bool SendApproveMail(PolicyDetailViewModel detail)
+        {
+            var apiKey = ConfigurationManager.AppSettings["SendGridKey"].ToString();
+            var client = new SendGridClient(apiKey);
+            var bodymessage = @"<html><head><title> Policy Detail </title> <style> table {    border-collapse: collapse; } table, th, td {    border: 1px solid black;
+                        }</style>
+                    </head><body><table >" +
+                "<thead class='thead-dark'><tr><td>Policy No</td><td>Customer Name</td><td>Date Of Birth</td><td>Phone No</td><td>Sum Assured</td><td>Policy Created Date</td><td>PremiumAmount</td></tr></thead>" +
+                "<tr><td>" + detail.PolicyNo + "</td><td>" + detail.FirstName + " " + detail.LastName + "</td><td>" + detail.DateofBirth + "</td><td>" + detail.MobileNo + "</td><td>" + detail.SumAssured + "</td><td>" + detail.CreatedDate + "</td><td>" + detail.PremiumAmount + "</td></tr>" +
+                "</table>" +
+                "<br/> THIS IS AN AUTOMATED MESSAGE - PLEASE DO NOT REPLY DIRECTLY TO THIS EMAIL." +
+                "</body></html>";
+            var msg = new SendGridMessage()
+            {
+                From = new EmailAddress("charlesjosh.j@gmail.com", "Charles"),
+                Subject = "Policy No : " + detail.PolicyNo + " has been Approved.",
+                // PlainTextContent = "Hello, Email!",
+                HtmlContent = bodymessage
+            };
+            msg.AddTo(new EmailAddress("charles.josephamalraj@mindtree.com", "Insurance Admin"));
+            var response = client.SendEmailAsync(msg);
+            return true;
         }
     }
 }

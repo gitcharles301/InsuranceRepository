@@ -115,8 +115,7 @@ namespace InsuranceIssueApp.Controllers
                         else if (fileNum == 2)
                             detail.DisplayFileName = "Medical Checkup Document";
                         manager.InsertSupportingDocument(detail);
-                    }
-                    fileNum += 1;
+                    }                    
                 }
             }
             List<SupportingDocument> listDocument = manager.GetSupportingDocument(id);
@@ -130,6 +129,22 @@ namespace InsuranceIssueApp.Controllers
             string key = ConfigurationManager.AppSettings["key"];
             string connectionString = string.Format("DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1}", accountname, key);
             return CloudStorageAccount.Parse(connectionString);
+        }
+
+        public FileResult DownloadSupportingDocument(string fileName)
+        {
+            CloudStorageAccount cloudStorageAccount = GetConnectionString();
+            CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
+            CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference(ConfigurationManager.AppSettings["ContainerName"]);
+            CloudBlockBlob azureBlockBlob = cloudBlobContainer.GetBlockBlobReference(fileName); 
+            Stream blobStream = azureBlockBlob.OpenRead();
+            return File(blobStream, azureBlockBlob.Properties.ContentType, fileName);
+        }
+
+        public ActionResult GetSupportingDocument(string tempPolicyNo)
+        {
+            List<SupportingDocument> listDocument = manager.GetSupportingDocument(Convert.ToInt64(tempPolicyNo));
+            return Json(listDocument, JsonRequestBehavior.AllowGet);
         }
     }
 }

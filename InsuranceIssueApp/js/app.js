@@ -12,7 +12,7 @@
         changeYear: true,
         maxDate: '0'
     });
-    
+
 
     $("#tabBasicDetail").click(function () {
         TabVisiable('BD');
@@ -57,7 +57,7 @@
 
     // Basic Detail Save Click
     $("#btnBasicDetail").click(function () {
-       
+
         if ($("#txtFirstName").val() == "") {
             $("#revFirstName").show();
             $("#revFirstName").html("Please enter FirstName!");
@@ -92,19 +92,19 @@
             $("#rfvMailingState").show();
             $("#rfvMailingState").html("Please select State!");
             return false;
-        }      
-       
+        }
+
         else {
             var InsurrerDetail = {
-                FirstName : $("#txtFirstName").val(),
-                MiddleName:$("#txtMiddleName").val(),
+                FirstName: $("#txtFirstName").val(),
+                MiddleName: $("#txtMiddleName").val(),
                 LastName: $("#txtLastName").val(),
                 EmailID: $("#txtEmailId").val(),
                 MobileNo: $("#txtMobileNo").val(),
                 State: $("#ddlMailingState option:selected").val(),
                 AgentId: $("#hdnUserid").val(),
                 DateofBirth: $("#txtDateofBirth").val(),
-                Gender : $("input[name='gender']:checked").val()
+                Gender: $("input[name='gender']:checked").val()
             };
             var baseapiurl = getWebapiBaseUrl() + 'api/InsuranceAPI/CreateBasicDetail';
             debugger;
@@ -113,12 +113,12 @@
                 data: InsurrerDetail,
                 type: 'POST',
                 dataType: 'json',
-                success: function (jData) {                  
+                success: function (jData) {
                     $('#hdnTempPolicyNo').val(jData);
                     TabVisiable('PD');
                 },
                 error: function (err) {
-                   // alert(err);
+                    // alert(err);
                 }
             });
         }
@@ -228,7 +228,7 @@
                 NomineeLastName: $("#txtNomineeLastName").val(),
                 NomineeDateofBirth: $("#txtNomineeDateofBirth").val(),
                 NomineeAddress: $("#txtNomineeAddress").val(),
-                NomineeCity: $("#ddlNomineeCity option:selected").val(),               
+                NomineeCity: $("#ddlNomineeCity option:selected").val(),
                 NomineePincode: $("#txtNomineePincode").val(),
                 CreatedBy: $("#hdnUserid").val(),
                 TempPolicyNo: $('#hdnTempPolicyNo').val()
@@ -240,7 +240,7 @@
                 data: NomineeDetail,
                 type: 'POST',
                 dataType: 'json',
-                success: function (jData) {                  
+                success: function (jData) {
                     TabVisiable('MD');
                 },
                 error: function (err) {
@@ -279,7 +279,7 @@
                 MedicalCheckupDate: $("#txtCheckupDate").val(),
                 HospitalName: $("#txtHospitalName").val(),
                 DoctorName: $("#txtDoctorName").val(),
-                MedicalReportComment: $("#txtReportComments").val(),               
+                MedicalReportComment: $("#txtReportComments").val(),
                 CreatedBy: $("#hdnUserid").val(),
                 TempPolicyNo: $('#hdnTempPolicyNo').val()
             };
@@ -322,12 +322,12 @@
             $("#revSmoker").show();
             $("#revSmoker").html("Please select Smoker Status!");
             return false;
-        }               
+        }
         else {
             var PolicyDetail = {
                 SumAssured: $("#txtSumAssured").val(),
                 SmokerStatus: $("#ddlSmoker option:selected").val(),
-                PolicyPaymentMode: $("#ddlPolicyPaymentMode option:selected").val(),                
+                PolicyPaymentMode: $("#ddlPolicyPaymentMode option:selected").val(),
                 PolicyTerm: $("#ddlPolicyTerm option:selected").val(),
                 PolicyCreatedBy: $("#hdnUserid").val(),
                 TempPolicyNo: $('#hdnTempPolicyNo').val(),
@@ -376,7 +376,7 @@
             PostSupportingDocument();
         }
     });
-   
+
     $("#btnPersonalPrevious").click(function () {
         TabVisiable('BD');
     });
@@ -392,22 +392,21 @@
     $("#btnPolicyDetailPrevious").click(function () {
         TabVisiable('DU');
     });
-   
+
 
     $("#btnDocumentUploadPrevious").click(function () {
         TabVisiable('MD');
     });
-    
+
 
 });
-function ClearBasicDetailControls()
-{
+function ClearBasicDetailControls() {
     $("#txtFirstName").val('');
     $("#txtMiddleName").val('');
     $("#txtLastName").val('');
     $("#txtEmailId").val('');
     $("#txtMobileNo").val('');
-    $("#ddlMailingState").val(0);      
+    $("#ddlMailingState").val(0);
     $("#txtDateofBirth").val('');
     $("input[name='gender']:checked").val(-1);
 }
@@ -419,32 +418,30 @@ function ClearPersonalDetailControls() {
     $("#txtPanNo").val('');
     $("#ddlCity").val(0);
 }
-function ClearNoimeeDetailControls()
-{
+function ClearNoimeeDetailControls() {
     $("#txtNomineeFirstName").val('');
     $("#txtNomineeMiddleName").val('');
     $("#txtNomineeLastName").val('');
     $("#txtNomineeDateofBirth").val('');
     $("#txtNomineeAddress").val('');
     $("#ddlNomineeCity").val(0);
-    $("#txtNomineePincode").val('');   
+    $("#txtNomineePincode").val('');
     $('#hdnTempPolicyNo').val('');
 
 }
 
-function ClearMedicalDetailControls()
-{
+function ClearMedicalDetailControls() {
     $("#txtCheckupDate").val('');
     $("#txtHospitalName").val('');
     $("#txtDoctorName").val('');
-    $("#txtReportComments").val('');               
+    $("#txtReportComments").val('');
 
 }
 function ClearPolicyDetailControls() {
     $("#txtAddress").val('');
     $("#ddlSmoker").val(0);
     $("#ddlPolicyPaymentMode").val(0);
-    $("#ddlPolicyTerm").val(0);    
+    $("#ddlPolicyTerm").val(0);
     $('#hdnTempPolicyNo').val(0);
     $('#ddlPolicyTypeId').val(0);
     $('#PremiumAmount').val('');
@@ -453,31 +450,39 @@ function formatJSONDate(jsonDate) {
     var newDate = dateFormat(jsonDate, "mm/dd/yyyy");
     return newDate;
 }
-function getWebapiBaseUrl()
-{
+function getWebapiBaseUrl() {
     var uri = 'http://localhost/InsuranceIssueApp.WebAPI/';
     return uri;
 }
-function loadAllPolicyDetail()
-{
+function loadAllPolicyDetail() {
     var TempPolicyNo = $('#hdnTempPolicyNo').val();
-    if (TempPolicyNo != 0)
-    {
+    if (TempPolicyNo != 0) {
         $.ajax({
             url: '/InsuranceIssueApp.Web/Policy/loadTabPolicyDetail?tempPolicyNo=' + TempPolicyNo,
             type: 'POST',
             dataType: 'json',
-            success: function (data) {                    
-                if (data != null && data.length > 0) {
-                    TabVisiable('BD');                   
+            success: function (data) {
+                if (data != null) {
+                    TabVisiable('BD');
                     $("#txtFirstName").val(data.FirstName);
                     $("#txtMiddleName").val(data.MiddleName);
                     $("#txtLastName").val(data.LastName);
                     $("#txtEmailId").val(data.EmailID);
                     $("#txtMobileNo").val(data.MobileNo);
-                    $("#ddlMailingState").val(data.State);
-                    $("#txtDateofBirth").val(data.DateofBirth);
-                    $("input[name='gender']:checked").val(data.Gender);
+                    $("#ddlMailingState").val(data.State);                   
+                    var date = new Date(moment(data.DateofBirth).toDate());
+                    var sday = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+                    var smonth = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
+                    var syear = date.getFullYear();
+                    var sDate = sday + '/' + smonth + '/' + syear;
+                    // date = new Date(sDate);(date.getMonth() + 1)
+                    $("#txtDateofBirth").val(sDate);                    
+                    if (data.Gender == 1)
+                        $('#rdMale').prop('checked', true);
+                    else if (dat.Gender == 2)
+                        $('#rdFemale').prop('checked', true);
+                    else 
+                        $('#rdTransgender').prop('checked', true);                   
                 }
             },
             error: function (err) {
@@ -525,27 +530,22 @@ function ValidateEmailID(txtEmailID) {
     }
 
 }
-function TabVisiable(tabName)
-{
+function TabVisiable(tabName) {
     $('#BasicDetail,#PersonalDetail,#NomineeDetail,#MedicalDetail,#PolicyDetail,#DocumentUpload').hide();
     $('#tabBasicDetail,#tabPersonalDetail,#tabNomineeDetail,#tabMedicalDetail,#tabPolicyDetail,#tabDocumentUpload').removeClass("btn-primary").addClass("btn-secondary");
-    if (tabName == 'BD')
-    {
-        $('#BasicDetail').show();      
+    if (tabName == 'BD') {
+        $('#BasicDetail').show();
         $("#tabBasicDetail").removeClass("btn-secondary").addClass("btn-primary");
     }
-    else if (tabName == 'PD')
-    {
+    else if (tabName == 'PD') {
         $('#PersonalDetail').show();
         $("#tabPersonalDetail").removeClass("btn-secondary").addClass("btn-primary");
     }
-    else if (tabName == 'ND')
-    {
+    else if (tabName == 'ND') {
         $('#NomineeDetail').show();
         $("#tabNomineeDetail").removeClass("btn-secondary").addClass("btn-primary");
     }
-    else if (tabName == 'MD')
-    {
+    else if (tabName == 'MD') {
         $('#MedicalDetail').show();
         $("#tabMedicalDetail").removeClass("btn-secondary").addClass("btn-primary");
     }
@@ -553,8 +553,7 @@ function TabVisiable(tabName)
         $('#DocumentUpload').show();
         $("#tabDocumentUpload").removeClass("btn-secondary").addClass("btn-primary");
     }
-    else if (tabName == 'PLD')
-    {
+    else if (tabName == 'PLD') {
         $('#PolicyDetail').show();
         $("#tabPolicyDetail").removeClass("btn-secondary").addClass("btn-primary");
     }
@@ -578,20 +577,21 @@ function PostSupportingDocument() {
             data: formData,
             type: "POST",
             success: function (jData) {
-                if (jData != null && jData.length > 0) {
-                    alert('Document Uploaded Successfully.');
-                    TabVisiable('PLD');
+                if (jData != null) {
+                    $("#wait").css("display", "none");                    
                     var table = $('#dataTable');
                     table.html('');
                     var tableMarkup = "<thead class='thead-dark'><tr><td>ID</td><td>Display Name</td><td>FileName</td></tr></thead>";
 
-                    $.each(data, function () {                       
+                    $.each(data, function () {
                         tableMarkup += "<tr><td>" + this.FileId + "</td>";
                         tableMarkup += "<td>" + this.DisplayFileName + "</td>";
-                        tableMarkup += "<td>" + this.FileName + "</td></tr>";                        
+                        tableMarkup += "<td>" + this.FileName + "</td></tr>";
                     });
 
                     table.append(tableMarkup);
+
+                    TabVisiable('PLD');
                     $("#divError").hide();
                     //$('#tbody').html(strHtml);
                 }

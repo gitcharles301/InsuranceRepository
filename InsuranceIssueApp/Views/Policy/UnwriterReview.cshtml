@@ -17,8 +17,6 @@
     </div>
 
 </div>
-<div id="divError" style="display:inline-block;color:Red;display:none;">
-</div>
 <div class="table-responsive">
     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0"></table>
 </div>
@@ -26,6 +24,9 @@
 <div id="divUpdateUWReview" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
+            <div id="divError" style="display:inline-block;color:Red;display:none;">
+            </div>
+
             <div class="modal-header">
                 <h5 class="modal-title">Unwriter Review Detail</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -110,6 +111,9 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="col-xs-12 table-responsive">
+                    <table class="table table-bordered" id="documentTable" width="100%" cellspacing="0"></table>
                 </div>
             </div>
             <div class="modal-footer">
@@ -251,5 +255,42 @@
           $('#divUpdateUWReview').modal('show')
           /// $("#divCallbackUpdate").show();
           $("#hdnTempPolicyNo").val(ID);
+          debugger;
+          $.ajax({
+              url: '/InsuranceIssueApp.Web/Policy/GetSupportingDocument?tempPolicyNo=' + ID,
+              type: "POST",           
+              dataType: 'json',
+              success: function (data) {
+                  if (data != null) {
+                      var table = $('#documentTable');
+                      table.html('');
+                      var tableMarkup = "<thead class='thead-dark'><tr><td>Document Name</td><td>FileName</td><td>View</td></tr></thead>";
+                      $.each(data, function () {   
+                          tableMarkup += "<td>" + this.DisplayFileName + "</td>";
+                          tableMarkup += "<td>" + this.FileName + "</td>";
+                          var fileName = "'"+ this.FileName + "'";
+                          tableMarkup += '<td><button type="button" onclick="downloadfile(' + fileName + ')"><i class="fa fa-download"></i></button> </td></tr>';
+                          // tableMarkup += '<td><button type="button" onclick="loadUpdateUWReview(' + this.TempPolicyNo + ')"  class="btn btn-success">Generate PDF</button> </td></tr>';
+                      });
+
+                      table.append(tableMarkup);
+                      $("#divError").hide();
+                  }
+                  else {
+                      $("#divError").show();
+                      $("#divError").html("No Records Found!");
+
+                  }
+                  // table.append('</table>');
+              },
+              error: function (err) {
+                  $("#divError").show();
+                  $("#divError").html(err);
+              }
+          });
+      }
+
+      function downloadfile(filename) {         
+          window.open('/InsuranceIssueApp.Web/Policy/DownloadSupportingDocument?fileName=' + filename, '_blank');
       }
 </script>
