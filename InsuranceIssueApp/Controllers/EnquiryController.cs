@@ -44,7 +44,7 @@ namespace InsuranceIssueApp.Controllers
             List<Enquiry> listEnquiies = null;
             DateTime dtStartDate = DateTime.ParseExact(fromdate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             DateTime dtEndDate = DateTime.ParseExact(todate, "dd/MM/yyyy", CultureInfo.InvariantCulture);           
-            string keyname = fromdate + todate + (int)Session["UserId"];
+            string keyname ="Enquiry_" + fromdate + todate + (int)Session["UserId"];
             if (RedisCacheHelper.keyExistsInCache(keyname))
                 listEnquiies = RedisCacheHelper.GetCacheData<Enquiry>(keyname);
             else
@@ -90,6 +90,9 @@ namespace InsuranceIssueApp.Controllers
                         list = (List<EnquiryError>)xs.Deserialize(memoryStream);
                     }
                 }
+
+                if (list.Count > 0)
+                    RedisCacheHelper.ClearAllCacheData("Enquiry_");
             }
             return Json(list.OrderBy(o => o.RowNumber), JsonRequestBehavior.AllowGet);
         }

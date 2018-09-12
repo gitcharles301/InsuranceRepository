@@ -56,5 +56,21 @@ namespace InsuranceIssueApp.Common
             }
             return true;
         }
+
+        public static bool ClearAllCacheData(string keyname)
+        {
+            var endpoints = Connection.GetEndPoints();
+            var server = Connection.GetServer(endpoints.First());          
+            var keys = server.Keys();
+            IDatabase cache = lazyConnection.Value.GetDatabase();
+            foreach (var key in keys)
+            {
+                if (key.ToString().Contains(keyname))
+                {
+                    cache.KeyDelete(key);                    
+                }
+            }
+            return true;
+        }
     }
 }
