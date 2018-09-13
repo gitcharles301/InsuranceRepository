@@ -13,19 +13,20 @@
 });
 
 function getWebapiBaseUrl() {
-    var uri = 'http://localhost:54118/';
+  //  var uri = 'http://localhost:54118/';
+    var uri = 'http://insurancewebapi.azurewebsites.net/';
     return uri;
 }
 
 function RedirectToViewPolicy(tempPolicyNo)
 {
-    location.href = '/InsuranceIssueApp.Web/Policy/Index?tempPolicyNo='+ tempPolicyNo;
+    location.href = '/Policy/Index?tempPolicyNo='+ tempPolicyNo;
 }
 function GetTop5PolicyInQueue() {   
    // var baseapiurl = getWebapiBaseUrl() + 'api/InsuranceAPI/GetTop5PolicyInQueue?loginid=' + $("#hdnUserid").val();
     //var baseapiurl = '@Url.Action("GetTop5PolicyInQueue", "Home")' + '?loginid=' + $("#hdnUserid").val();
     $.ajax({
-        url: 'InsuranceIssueApp.Web/Home/GetTop5PolicyInQueue?loginid=' + $("#hdnUserid").val(),        
+        url: '/Home/GetTop5PolicyInQueue?loginid=' + $("#hdnUserid").val(),        
         type: 'GET',
         dataType: 'json',
         success: function (data) {
@@ -56,7 +57,7 @@ function dashboardchart()
 {
     $("#wait").css("display", "block");
     $.ajax({
-        url: '/InsuranceIssueApp.Web/Home/RepAgentPolicyMonthWise?agentid=' + $("#hdnUserid").val(),
+        url: '/Home/RepAgentPolicyMonthWise?agentid=' + $("#hdnUserid").val(),
         type: 'GET',
         dataType: 'json',
         success: function (jData) {
@@ -138,7 +139,7 @@ function loadDashboardCount() {
     $("#wait").css("display", "block");
        
   //  var baseapiurl = 'http://localhost/InsuranceIssueApp.WebAPI/api/InsuranceAPI/GetUserDashboardDetail?userid=' + $("#hdnUserid").val();
-    var baseapiurl = '/InsuranceIssueApp.Web/Home/GetUserDashboardDetail?agentid=' + $("#hdnUserid").val();
+    var baseapiurl = '/Home/GetUserDashboardDetail?agentid=' + $("#hdnUserid").val();
         debugger;
         $.ajax({
             url: baseapiurl,

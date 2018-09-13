@@ -74,7 +74,7 @@ namespace InsuranceIssueApp.Controllers
         {
             DateTime dtStartDate = DateTime.ParseExact(fromdate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             DateTime dtEndDate = DateTime.ParseExact(todate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            List<PolicyDetailViewModel> listEnquiies = manager.ViewUnwriterReviewList(dtStartDate, dtEndDate, 4);
+            List<PolicyDetailViewModel> listEnquiies = manager.ViewUnwriterReviewList(dtStartDate, dtEndDate, 0);
             return Json(listEnquiies.OrderBy(o => o.TempPolicyNo), JsonRequestBehavior.AllowGet);
         }
 

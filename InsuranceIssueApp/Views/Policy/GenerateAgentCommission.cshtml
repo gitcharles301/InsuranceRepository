@@ -67,7 +67,7 @@
             var reportflag = 'GenerateCommission';
 
             $.ajax({
-                url: '/InsuranceIssueApp.Web/Policy/GenerateAgentCommissionUpdate?fromdate=' + $("#dtpStartDate").val() + '&todate=' + $("#dtpEndDate").val() + '&agentid=' + $("#hdnUserid").val() + '&reportflag=' + reportflag,
+                url: '/Policy/GenerateAgentCommissionUpdate?fromdate=' + $("#dtpStartDate").val() + '&todate=' + $("#dtpEndDate").val() + '&agentid=' + $("#hdnUserid").val() + '&reportflag=' + reportflag,
                 type: "POST",
                 data: ReportFilters,
                 dataType: 'json',

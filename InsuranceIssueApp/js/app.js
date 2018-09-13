@@ -451,14 +451,15 @@ function formatJSONDate(jsonDate) {
     return newDate;
 }
 function getWebapiBaseUrl() {
-    var uri = 'http://localhost/InsuranceIssueApp.WebAPI/';
+   // var uri = 'http://localhost/InsuranceIssueApp.WebAPI/';
+    var uri = 'http://insurancewebapi.azurewebsites.net/';
     return uri;
 }
 function loadAllPolicyDetail() {
     var TempPolicyNo = $('#hdnTempPolicyNo').val();
     if (TempPolicyNo != 0) {
         $.ajax({
-            url: '/InsuranceIssueApp.Web/Policy/loadTabPolicyDetail?tempPolicyNo=' + TempPolicyNo,
+            url: '/Policy/loadTabPolicyDetail?tempPolicyNo=' + TempPolicyNo,
             type: 'POST',
             dataType: 'json',
             success: function (data) {
@@ -571,7 +572,7 @@ function PostSupportingDocument() {
 
     if (file.type != null) {
         $.ajax({
-            url: '/InsuranceIssueApp.Web/Policy/UploadSupportingDocuments',
+            url: '/Policy/UploadSupportingDocuments',
             contentType: false, // Not to set any content header
             processData: false, // Not to process data
             data: formData,
@@ -583,7 +584,7 @@ function PostSupportingDocument() {
                     table.html('');
                     var tableMarkup = "<thead class='thead-dark'><tr><td>ID</td><td>Display Name</td><td>FileName</td></tr></thead>";
 
-                    $.each(data, function () {
+                    $.each(jData, function () {
                         tableMarkup += "<tr><td>" + this.FileId + "</td>";
                         tableMarkup += "<td>" + this.DisplayFileName + "</td>";
                         tableMarkup += "<td>" + this.FileName + "</td></tr>";
@@ -596,8 +597,8 @@ function PostSupportingDocument() {
                     //$('#tbody').html(strHtml);
                 }
                 else {
-                    $("#divError").show();
-                    $("#divError").html('Enquiry uploaded successfully.');
+                  //  $("#divError").show();
+                  //  $("#divError").html('Enquiry uploaded successfully.');
                 }
             }
         });

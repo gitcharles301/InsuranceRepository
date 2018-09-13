@@ -61,7 +61,8 @@
 
     });
     function getWebapiBaseUrl() {
-        var uri = 'http://localhost/InsuranceIssueApp.WebAPI/';
+        //var uri = 'http://localhost/InsuranceIssueApp.WebAPI/';
+        var uri = 'http://insurancewebapi.azurewebsites.net/';
         return uri;
     }
    
@@ -98,50 +99,14 @@
                 AgentId : $('#ddlAgentName option:selected').val()
             };
 
-            ///var baseapiurl = getWebapiBaseUrl() + 'api/InsuranceAPI/CreateNomineeDetail';
-
-
-            //$.ajax({
-            //    url: '/InsuranceIssueApp.Web/Report/RepAgentSalesResult?fromdate=' + $("#dtpStartDate").val() + '&todate=' + $("#dtpEndDate").val() + '&agentid=' + $('ddlAgentName option:selected').val(),
-            //    type: "POST",
-            //    data: ReportFilters,
-            //    dataType: 'json',
-            //    success: function (data) {
-            //        if (data != null && data.length > 0) {
-            //            var table = $('#dataTable');
-            //            table.html('');
-            //            var tableMarkup = "<tr><td>Policy No</td><td>Agent Name</td><td>SumAssured</td><td>Policy Date</td><td>Policy PaymentMode</td><td>PolicyType</td><td>PremiumAmount</td><td>PolicyStatus</td></tr>";
-
-            //            $.each(data, function () {
-            //                tableMarkup = tableMarkup + "<tr><td>" + this.PolicyNo + "</td><td>" + this.AgentName + "</td><td>" + this.SumAssured + "</td><td>" + this.PolicyDate + "</td><td>" + this.PolicyPaymentModeName + "</td><td>" + this.PolicyTypeName + "</td>";
-            //                tableMarkup += "<td>" + this.PremiumAmount + "</td>";
-            //                tableMarkup += "<td>" + this.PolicyStatusName + "</td></tr>";
-                            
-            //            });
-
-            //            table.append(tableMarkup);
-            //            $("#divError").hide();
-            //        }
-            //        else {
-            //            $("#divError").show();
-            //            $("#divError").html("No Records Found!");
-            //            var table = $('#dataTable');
-            //            table.html('');
-            //        }
-            //        // table.append('</table>');
-            //    },
-            //    error: function (err) {
-            //        $("#divError").show();
-            //        $("#divError").html(err);
-            //    }
-            //});
+            
             var url = '/InsuranceIssueApp.Web/Report/RepAgentSalesResult?fromdate=' + $("#dtpStartDate").val() + '&todate=' + $("#dtpEndDate").val() + '&agentid=' + $('#ddlAgentName option:selected').val();
             //alert($('#ddlAgentName option:selected').val());
             $("#jqGrid").jqGrid({
                 url: url,
                 datatype: 'json',
                 mtype: 'POST',
-                colNames: ['Policy No', 'Agent Name', 'Sum Assured', 'Policy Date', 'Policy PaymentMode', 'Policy Type', 'PremiumAmount', 'PolicyStatus'],
+                colNames: ['Policy No', 'Agent Name', 'Sum Assured', 'Policy Date', 'Policy PaymentMode', 'Policy Type', 'PremiumAmount', 'PolicyStatus','Download'],
                 colModel: [
                     { key: true, name: 'PolicyNo', index: 'PolicyNo', editable: true },
                     { key: false, name: 'AgentName', index: 'AgentName', editable: true },
@@ -150,7 +115,11 @@
                     { key: false, name: 'PolicyPaymentModeName', index: 'PolicyPaymentModeName', editable: true },
                     { key: false, name: 'PolicyTypeName', index: 'PolicyTypeName', editable: true },
                     { key: false, name: 'PremiumAmount', index: 'PremiumAmount', editable: true },
-                    { key: false, name: 'PolicyStatusName', index: 'PolicyStatusName', editable: true }
+                    { key: false, name: 'PolicyStatusName', index: 'PolicyStatusName', editable: true },                    
+                    {
+                        key: false, name: 'PolicyNo',
+                        formatter: formatImage
+                    }                    
                 ],
                 pager: jQuery('#jqControls'),
               //  rowNum: 10,
@@ -173,7 +142,19 @@
         }
 
     }
-
+    function formatImage(cellValue, options, rowObject) {
+        if (options.rowData.PolicyStatusName == "Policy Document Generated") {
+            var fileName = "'" + cellValue + ".pdf'";
+            var imageHtml = "<button type='button' onclick=downloadfile(" + fileName + ")><i class='fa fa-download'></i></button>";
+            return imageHtml;
+        }
+        else {
+            return "";
+        }
+    }
+    function downloadfile(filename) {
+        window.open('/Policy/DownloadSupportingDocument?fileName=' + filename, '_blank');
+    }
     function loadEnquiryCallback(ID) {
         $('#divCallbackUpdate').modal('show')
         /// $("#divCallbackUpdate").show();

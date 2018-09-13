@@ -133,7 +133,7 @@
           });       
     });
       function RedirectToViewPolicy(tempPolicyNo) {
-          location.href = '/InsuranceIssueApp.Web/Policy/Index?tempPolicyNo=' + tempPolicyNo;
+          location.href = '/Policy/Index?tempPolicyNo=' + tempPolicyNo;
       }      
       function GetAllPolcies() {
 
@@ -154,7 +154,7 @@
                   ToDate: $("#dtpEndDate").val()
               };
               $.ajax({
-                  url: '/InsuranceIssueApp.Web/Policy/GetAllPoliciesForGenrate?fromdate=' + $("#dtpStartDate").val() + '&todate=' + $("#dtpEndDate").val(),
+                  url: '/Policy/GetAllPoliciesForGenrate?fromdate=' + $("#dtpStartDate").val() + '&todate=' + $("#dtpEndDate").val(),
                   type: "POST",
                   data: ReportFilters,
                   dataType: 'json',
@@ -162,15 +162,26 @@
                       if (data != null && data.length > 0) {
                           var table = $('#dataTable');
                           table.html('');
-                          var tableMarkup = "<thead class='thead-dark'><tr><td>Policy No</td><td>Customer Name</td><td>Date Of Birth</td><td>Phone No</td><td>Sum Assured</td><td>Policy Created Date</td><td>PremiumAmount</td><td>PolicyStatus</td><td>Edit Policy</td></tr></thead>";
+                          var tableMarkup = "<thead class='thead-dark'><tr><td>Policy No</td><td>Customer Name</td><td>Date Of Birth</td><td>Phone No</td><td>Sum Assured</td><td>Policy Created Date</td><td>PremiumAmount</td><td>PolicyStatus</td><td>Edit Policy</td><td>Policy Document</td></tr></thead>";
 
                           $.each(data, function () {
                               tableMarkup = tableMarkup + "<tr><td>" + this.PolicyNo + "</td><td>" + this.CustomerName + "</td><td>" + this.DOB + "</td><td>" + this.MobileNo + "</td><td>" + this.SumAssured + "</td><td>" + this.PolicyDate + "</td>";
 
                               tableMarkup += "<td>" + this.PremiumAmount + "</td>";
                               tableMarkup += "<td>" + this.PolicyStatusName + "</td>";
-                              tableMarkup += '<td><button type="button" onclick="RedirectToViewPolicy(' + this.TempPolicyNo + ')"  class="btn btn-danger">Edit</button> </td></tr>';
+                              if (this.PolicyStatusName != "Policy Document Generated" && this.PolicyStatusName != "Approved") {
+                                  tableMarkup += '<td><button type="button" onclick="RedirectToViewPolicy(' + this.TempPolicyNo + ')"  class="btn btn-danger">Edit</button> </td>';
+                              }
+                              else {
+                                  tableMarkup += '<td></td>';
+                              }
                              // tableMarkup += '<td><button type="button" onclick="loadUpdateUWReview(' + this.TempPolicyNo + ')"  class="btn btn-success">Generate PDF</button> </td></tr>';
+                              if (this.PolicyStatusName == "Policy Document Generated") {
+                                  var fileName = "'" + this.FileName + "'";
+                                  tableMarkup += '<td><button type="button" onclick="downloadfile(' + fileName + ')"><i class="fa fa-download"></i></button> </td></tr>';
+                              }
+                              else
+                                  tableMarkup += '<td>Document Not Generated</td></tr>'
                           });
 
                           table.append(tableMarkup);
@@ -191,7 +202,9 @@
           }
 
       }
-
+      function downloadfile(filename) {
+          window.open('/Policy/DownloadSupportingDocument?fileName=' + filename, '_blank');
+      }
       function loadUpdateUWReview(ID) {
           $('#divUpdateUWReview').modal('show')
           /// $("#divCallbackUpdate").show();

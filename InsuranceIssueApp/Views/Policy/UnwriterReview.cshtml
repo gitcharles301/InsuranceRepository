@@ -147,7 +147,8 @@
           });
     });
       function getWebapiBaseUrl() {
-          var uri = 'http://localhost/InsuranceIssueApp.WebAPI/';
+          //var uri = 'http://localhost/InsuranceIssueApp.WebAPI/';
+          var uri = 'http://insurancewebapi.azurewebsites.net/';
           return uri;
       }
       function UpdateUWReview(id)
@@ -212,7 +213,7 @@
                   ToDate: $("#dtpEndDate").val()
               };
               $.ajax({
-                  url: '/InsuranceIssueApp.Web/Policy/GetAllPoliciesForReview?fromdate=' + $("#dtpStartDate").val() + '&todate=' + $("#dtpEndDate").val(),
+                  url: '/Policy/GetAllPoliciesForReview?fromdate=' + $("#dtpStartDate").val() + '&todate=' + $("#dtpEndDate").val(),
                   type: "POST",
                   data: ReportFilters,
                   dataType: 'json',
@@ -257,7 +258,7 @@
           $("#hdnTempPolicyNo").val(ID);
           debugger;
           $.ajax({
-              url: '/InsuranceIssueApp.Web/Policy/GetSupportingDocument?tempPolicyNo=' + ID,
+              url: '/Policy/GetSupportingDocument?tempPolicyNo=' + ID,
               type: "POST",           
               dataType: 'json',
               success: function (data) {
@@ -291,6 +292,6 @@
       }
 
       function downloadfile(filename) {         
-          window.open('/InsuranceIssueApp.Web/Policy/DownloadSupportingDocument?fileName=' + filename, '_blank');
+          window.open('/Policy/DownloadSupportingDocument?fileName=' + filename, '_blank');
       }
 </script>

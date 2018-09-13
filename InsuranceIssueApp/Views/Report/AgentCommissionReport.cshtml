@@ -57,7 +57,8 @@
 
     });
     function getWebapiBaseUrl() {
-        var uri = 'http://localhost/InsuranceIssueApp.WebAPI/';
+       // var uri = 'http://localhost/InsuranceIssueApp.WebAPI/';
+        var uri = 'http://insurancewebapi.azurewebsites.net/';
         return uri;
     }
     function LoadAgentList() {
@@ -92,7 +93,7 @@
                 AgentId : $('#ddlAgentName option:selected').val()
             };
            
-            var url = '/InsuranceIssueApp.Web/Report/RepAgentCommisionResult?fromdate=' + $("#dtpStartDate").val() + '&todate=' + $("#dtpEndDate").val() + '&agentid=' + $('#ddlAgentName option:selected').val();
+            var url = '/Report/RepAgentCommisionResult?fromdate=' + $("#dtpStartDate").val() + '&todate=' + $("#dtpEndDate").val() + '&agentid=' + $('#ddlAgentName option:selected').val();
             alert($('#ddlAgentName option:selected').val());
             $("#jqGrid").jqGrid({
                 url: url,

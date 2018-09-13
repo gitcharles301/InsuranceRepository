@@ -102,7 +102,7 @@
         $("#jqGrid").show();
         $("#jqControls").show();
 
-        var url = '/InsuranceIssueApp.Web/Report/RepAgentTargetResult?month=' + $("#ddlMonth option:selected").val() + '&year=' + $("#ddlYear option:selected").val() + '&agentid=' + $('#ddlAgentName option:selected').val() + '&typeid=' + $('#ddlPolicyTypeId option:selected').val();
+        var url = '/Report/RepAgentTargetResult?month=' + $("#ddlMonth option:selected").val() + '&year=' + $("#ddlYear option:selected").val() + '&agentid=' + $('#ddlAgentName option:selected').val() + '&typeid=' + $('#ddlPolicyTypeId option:selected').val();
         //alert($('#ddlAgentName option:selected').val());
         $("#jqGrid").jqGrid({
             url: url,
@@ -140,7 +140,7 @@
         $("#divContainerChart").show();
         $("#jqGrid").hide();
         $("#jqControls").hide();
-        var url = '/InsuranceIssueApp.Web/Report/RepAgentTargetResult?month=' + $("#ddlMonth option:selected").val() + '&year=' + $("#ddlYear option:selected").val() + '&agentid=' + $('#ddlAgentName option:selected').val() + '&typeid=' + $('#ddlPolicyTypeId option:selected').val();
+        var url = '/Report/RepAgentTargetResult?month=' + $("#ddlMonth option:selected").val() + '&year=' + $("#ddlYear option:selected").val() + '&agentid=' + $('#ddlAgentName option:selected').val() + '&typeid=' + $('#ddlPolicyTypeId option:selected').val();
         $.ajax({
             url: url,
             type: 'POST',
@@ -235,7 +235,8 @@
     }
 
     function getWebapiBaseUrl() {
-        var uri = 'http://localhost/InsuranceIssueApp.WebAPI/';
+      //  var uri = 'http://localhost/InsuranceIssueApp.WebAPI/';
+        var uri = 'http://insurancewebapi.azurewebsites.net/';
         return uri;
     }
 
